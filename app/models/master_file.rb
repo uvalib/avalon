@@ -366,6 +366,22 @@ class MasterFile < ActiveFedora::Base
     handle_asynchronously :extract_still
   end
 
+  def workflow_stats
+    instance_data = Rubyhorn.client.instance_json(self.workflow_id)
+    instance_data['workflow']['operations']['operation'].collect do |op|
+      started   = Time.at(op['started'] / 1000) rescue nil
+      completed = Time.at(op['completed'] / 1000) rescue nil
+      duration  = completed-started rescue nil
+      {
+        :operation => op['description'],
+        :state     => op['state'],
+        :started   => started,
+        :completed => completed,
+        :duration  => duration
+      }
+    end
+  end
+
   protected
 
   def mediainfo
@@ -492,6 +508,5 @@ class MasterFile < ActiveFedora::Base
 
     file.close
   end
-
 
 end
