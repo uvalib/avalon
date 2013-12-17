@@ -25,15 +25,19 @@ module Avalon
 
       attr_reader :collection
 
+      def self.global_dropbox *args
+        Avalon::Dropbox.new(Avalon::Configuration['dropbox']['path'])
+      end
+
       def initialize(collection)
         @collection = collection
       end
 
-      def initialize_media_object_from_package( entry, user )
+      def initialize_media_object_from_package( entry, user, package_collection=collection )
         fields = entry.fields.dup
         media_object = MediaObject.new(avalon_uploader: user)
         media_object.workflow.origin = 'batch'
-        media_object.collection = collection
+        media_object.collection = package_collection
         media_object.update_datastream(:descMetadata, fields)
         media_object
       end
@@ -63,23 +67,32 @@ module Avalon
       end
 
       def ingest
-
         # Scans dropbox for new batch packages
-        new_packages = collection.dropbox.find_new_packages
-        logger.info "<< Found #{new_packages.count} new packages for collection #{collection.name} >>"
+        new_packages = if collection.nil?
+          self.class.global_dropbox.find_new_packages
+        else
+          collection.dropbox.find_new_packages
+        end
+
+        logger.info "<< Found #{new_packages.count} new packages >>"
 
         if new_packages.length > 0
           # Extracts package and process
           new_packages.each_with_index do |package, index|
             media_objects = []
             base_errors = []
+
+            package_collection = collection || Admin::Collection.from_dropbox_path(package.manifest.file)
             email_address = package.manifest.email || Avalon::Configuration['email']['notification']
             current_user = User.where(username: email_address).first || User.where(email: email_address).first
-            if current_user.nil?
+
+            if package_collection.nil?
+              base_errors << "No collection for dropbox path: #{File.dirname(package.manifest.file)}."
+            elsif current_user.nil?
               base_errors << "User does not exist in the system: #{email_address}."
             else
               package.validate do |entry|
-                media_object = initialize_media_object_from_package( entry, current_user.user_key )
+                media_object = initialize_media_object_from_package( entry, current_user.user_key, package_collection )
                 if media_object.collection && ! current_user.can?(:read, media_object.collection)
                   entry.errors.add(:collection, "You do not have permission to add items to collection: #{collection.name}.")
                 elsif ! media_object.collection && entry.fields[:collection].present?
@@ -93,7 +106,7 @@ module Avalon
             if base_errors.empty? && package.valid?
 
               package.process do |fields, files, opts, entry|
-                media_object = initialize_media_object_from_package( entry, current_user.user_key )
+                media_object = initialize_media_object_from_package( entry, current_user.user_key, package_collection )
                 media_object.save( validate: false)
 
                 files.each do |file_spec|

@@ -57,6 +57,13 @@ class Admin::Collection < ActiveFedora::Base
     Avalon::ControlledVocabulary.find_by_name(:units)
   end
 
+  def self.from_dropbox_path(path)
+    target_path = Pathname.new(path)
+    relative_path = target_path.relative_path_from(Pathname.new(Avalon::Configuration['dropbox']['path']))
+    collection_dir = relative_path.to_s.split(Pathname::SEPARATOR_PAT).first
+    Admin::Collection.find('dropbox_directory_name_sim' => collection_dir).first
+  end
+
   def created_at
     @created_at ||= DateTime.parse(create_date)
   end

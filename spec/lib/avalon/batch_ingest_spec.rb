@@ -45,6 +45,47 @@ describe Avalon::Batch::Ingest do
     MasterFile.any_instance.stub(:save).and_return(true)
   end
 
+  describe 'global dropbox' do
+    let(:collection) { FactoryGirl.create(:collection, name: 'Ut minus ut accusantium odio autem odit.', managers: ['frances.dickens@reichel.com']) }
+    let(:batch_ingest) { Avalon::Batch::Ingest.new(nil) }
+
+    before :each do
+      @dropbox_dir = collection.dropbox.base_directory
+      FileUtils.cp_r 'spec/fixtures/dropbox/example_batch_ingest', @dropbox_dir
+    end
+
+    after :each do
+      if @dropbox_dir =~ %r{spec/fixtures/dropbox/Ut} 
+        FileUtils.rm_rf @dropbox_dir
+      end
+    end
+
+    it 'imputes the correct collection from the directory name' do
+      collection_batch = Avalon::Batch::Package.new(File.join(@dropbox_dir, 'example_batch_ingest/batch_manifest.xlsx'))
+      Avalon::Dropbox.any_instance.stub(:find_new_packages).and_return [collection_batch]
+      batch_ingest.ingest
+      IngestBatch.count.should == 1
+      ingest_batch = IngestBatch.find(:first)
+      media_object = MediaObject.find(ingest_batch.media_object_ids.first)
+      media_object.collection.should == collection
+    end
+
+    it 'errors on an unmatchable directory name' do
+      collection_batch = Avalon::Batch::Package.new('spec/fixtures/dropbox/example_batch_ingest/batch_manifest.xlsx')
+      Avalon::Dropbox.any_instance.stub(:find_new_packages).and_return [collection_batch]
+      batch_ingest.ingest
+      mailer = double('mailer').as_null_object
+      IngestBatchMailer.should_receive(:batch_ingest_validation_error) { |pkg, errs|
+        pkg.should be_an_instance_of(Avalon::Batch::Package)
+        errs.should be_an_instance_of(Array)
+        errs.first.should =~ /^No collection for dropbox path:/
+      }.and_return(mailer)
+      mailer.should_receive(:deliver)
+      batch_ingest.ingest
+      IngestBatch.count.should == 0
+    end
+  end
+
   describe 'valid manifest' do
     let(:collection) { FactoryGirl.create(:collection, name: 'Ut minus ut accusantium odio autem odit.', managers: ['frances.dickens@reichel.com']) }
     let(:batch_ingest) { Avalon::Batch::Ingest.new(collection) }
@@ -131,7 +172,11 @@ describe Avalon::Batch::Ingest do
       non_manager_batch = Avalon::Batch::Package.new('spec/fixtures/batch_manifest_r2.xlsx')
       Avalon::Dropbox.any_instance.stub(:find_new_packages).and_return [non_manager_batch]
       mailer = double('mailer').as_null_object
-      IngestBatchMailer.should_receive(:batch_ingest_validation_error).with(duck_type(:each),duck_type(:each)).and_return(mailer)
+      IngestBatchMailer.should_receive(:batch_ingest_validation_error) { |pkg,errs|
+        pkg.should be_an_instance_of(Avalon::Batch::Package)
+        errs.should be_an_instance_of(Array)
+        errs.should be_empty
+      }.and_return(mailer)
       mailer.should_receive(:deliver)
       batch_ingest.ingest
       IngestBatch.count.should == 0
@@ -142,7 +187,11 @@ describe Avalon::Batch::Ingest do
       bad_offset_batch = Avalon::Batch::Package.new('spec/fixtures/batch_manifest_r2.xlsx')
       Avalon::Dropbox.any_instance.stub(:find_new_packages).and_return [bad_offset_batch]
       mailer = double('mailer').as_null_object
-      IngestBatchMailer.should_receive(:batch_ingest_validation_error).with(duck_type(:each),duck_type(:each)).and_return(mailer)
+      IngestBatchMailer.should_receive(:batch_ingest_validation_error) { |pkg,errs|
+        pkg.should be_an_instance_of(Avalon::Batch::Package)
+        errs.should be_an_instance_of(Array)
+        errs.should be_empty
+      }.and_return(mailer)
       mailer.should_receive(:deliver)
       batch_ingest.ingest
       IngestBatch.count.should == 0
