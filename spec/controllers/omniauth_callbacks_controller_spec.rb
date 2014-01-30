@@ -18,12 +18,12 @@ describe Users::OmniauthCallbacksController do
       post "lti"
     end
 
-    it "should has virtual_groups if logs in as LTI" do
-      expect(subject.current_user.virtual_groups).not_to be_empty
+    it "should have virtual_groups" do
+      expect(subject.user_session[:virtual_groups]).not_to be_empty
     end
 
-    it "should not be able to share if logged in as LTI" do
-      expect(Ability.new subject.current_user).not_to be_able_to :share, MediaObject
+    it "should not be a full login" do
+      expect(subject.user_session[:full_login]).to be_false
     end
   end
 end
