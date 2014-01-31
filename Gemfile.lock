@@ -528,6 +528,7 @@ GEM
     uuid (2.3.7)
       macaddr (~> 1.0)
     validates_email_format_of (1.5.3)
+    vine (0.0.2)
     warden (1.2.3)
       rack (>= 1.0)
     whenever (0.8.4)
@@ -614,4 +615,5 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   unicorn-rails
   validates_email_format_of
+  vine
   whenever
