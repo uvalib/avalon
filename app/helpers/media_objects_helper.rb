@@ -32,8 +32,11 @@ module MediaObjectsHelper
         css_class = case 
           # when context.workflow.current?(step)
           #   'nav-info'
+          when context.workflow.current?(step)
+            'active'
           when context.workflow.completed?(step)
             'nav-success'
+            'checked_off'
           else 'nav-disabled' 
           end
 

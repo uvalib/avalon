@@ -19,27 +19,34 @@ Unless required by applicable law or agreed to in writing, software distributed
 
 <div class="row span7">
   <% if flash[:error] %><div class="alert alert-error"><%= flash[:error] %></div><% end %>
+  <div class="widget stacked widget-table action-table">
 
-  <h3>System Groups</h3>
-    <table class="table table-striped ">
-      <thead>
+    <div class="widget-header">
+      <i class="icon-globe"></i>
+      <h3>System Groups</h3>
+    </div> <!-- /widget-header -->
+
+    <div class="widget-content">
+
+      <table class="table table-striped table-bordered">
+        <thead>
         <tr>
           <th>Group Name</th>
-          <th>Members#</th>
-          <!--<th>Ability</th>
-          <th>Resources#</th>-->
+          <th>Number of Members</th>
         </tr>
-      </thead>
-      <tbody>
+        </thead>
+        <tbody>
         <% @default_groups.each do |group|%>
-          <tr>
-            <td><%= link_to_if can?(:manage, group), group.name, edit_admin_group_path(group) %></td>
-            <td><%= group.users.count %></td>
-          </tr>
+        <tr>
+          <td><%= link_to_if can?(:manage, group), group.name, edit_admin_group_path(group) %></td>
+          <td><%= group.users.count %></td>
+        </tr>
         <% end %>
-      </tbody>
-    </table>
-
+        </tbody>
+      </table>
+    </div> <!-- /widget-content -->
+  </div> <!-- /widget -->
+<hr />
   <h3> Additional Groups</h3>
 
   <%= form_tag(admin_groups_path) do -%>
