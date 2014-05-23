@@ -13,15 +13,15 @@ Unless required by applicable law or agreed to in writing, software distributed
   specific language governing permissions and limitations under the License.
 ---  END LICENSE_HEADER BLOCK  ---
 %>
-<ul class="nav nav-wizard">
-  <% @workflow_steps.to_a.each do |step| %>    
-    <%= render "ingest_step", step: step, active: @mediaobject.workflow.active?(step.step) %>
-  <% end %>
-
-  <li class="nav-success"> 
-    <%= link_to media_object_path(@mediaobject) do %>
-      Preview
+<div class="tabbable tabs-left">
+  <ul class="nav nav-tabs" style="margin-right:-4px; min-width:200px">
+    <% @workflow_steps.to_a.each do |step| %>
+        <%= render "ingest_step", step: step,  active: @mediaobject.workflow.active?(step.step) %>
     <% end %>
-    <p>How end users see the item</p>
-  </li>
-</ul>
+
+    <%= link_to media_object_path(@mediaobject), class: 'nav-disabled' do %>
+        Preview
+    <% end %>
+    <br> <small class="nav-disabled black">How end users see the item</small>
+  </ul>
+</div>
