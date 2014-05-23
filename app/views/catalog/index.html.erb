@@ -19,7 +19,7 @@ Unless required by applicable law or agreed to in writing, software distributed
 <%# Index partial pulled in to declare this hidden div for more facet links since it was declared in blacklight's layout which we don't use %>
 <div id="ajax-modal" class="modal hide fade" tabindex="-1"></div>
 
-<div class="row">
+<div id="jumbo_img" class="row">
   <div id="sidebar" class="span3">
    <%= render :partial=>'facets' %>
   </div><!--/well -->
@@ -41,3 +41,9 @@ Unless required by applicable law or agreed to in writing, software distributed
     <% end %>
   </div>
 </div>
+<style>
+  /*#jumbo_img {*/
+      /*background:url('/assets/blurred-background-10.jpg') no-repeat center center ;*/
+      /*margin: -20px -20px 0px -20px;*/
+  /*}*/
+</style>

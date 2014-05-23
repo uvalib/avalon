@@ -43,7 +43,7 @@ Unless required by applicable law or agreed to in writing, software distributed
     </div> <!-- /widget-content -->
   </div> <!-- /widget -->
 <hr />
-  <h3> Additional Groups</h3>
+  <h3> Add an additional group</h3>
 
   <%= form_tag(admin_groups_path) do -%>
     <%= text_field_tag 'admin_group', nil, :placeholder => 'Enter group name here...' %> 
@@ -52,27 +52,36 @@ Unless required by applicable law or agreed to in writing, software distributed
 
   <%= form_tag update_multiple_admin_groups_path, method: :put do %>
 
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th><input type="checkbox" class="select-groups"></th>
-          <th>Group Name</th>
-          <th>Members#</th>
-          <!--<th>Ability</th>
-          <th>Resources#</th>-->
-        </tr>
-      </thead>
-      <tbody>
-        <% @groups.each do |group|%>
-          <tr>
-            <td><%= check_box_tag "group_ids[]", group.name %></td>
-            <td><%= link_to group.name, edit_admin_group_path(group) %></td>
-            <td><%= group.users.count %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+      <div class="widget stacked widget-table action-table">
 
+        <div class="widget-header">
+          <i class="icon-globe"></i>
+          <h3>Additional Groups</h3>
+        </div> <!-- /widget-header -->
+
+        <div class="widget-content">
+
+          <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+              <th><input type="checkbox" class="select-groups"></th>
+              <th>Group Name</th>
+              <th>Number of Members</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @groups.each do |group|%>
+                <tr>
+                  <td><%= check_box_tag "group_ids[]", group.name %></td>
+                  <td><%= link_to group.name, edit_admin_group_path(group) %></td>
+                  <td><%= group.users.count %></td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div> <!-- /widget-content -->
+      </div> <!-- /widget -->
+   <br>
     <%= submit_tag "Delete Groups", method: :delete, confirm: "Deleted groups cannot be recovered. Are you sure?", 
         class: "btn btn-danger delete", disabled: true %>
   <% end %>
