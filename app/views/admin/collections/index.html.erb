@@ -65,7 +65,7 @@ Unless required by applicable law or agreed to in writing, software distributed
 </div> <!-- /widget -->
       <hr />
       <%= link_to('Create Collection', new_admin_collection_path, remote: true, modal: true, class: 'btn btn-primary') unless cannot? :create, Admin::Collection %>
-  <br />
+  <div class="spacer"></div>
 
   <% else %>
       <div class="hero-unit">
@@ -91,3 +91,9 @@ Unless required by applicable law or agreed to in writing, software distributed
   </script>
 <% end %>
 </div>
+
+<style>
+    .spacer {
+        margin: 20px 0;
+    }
+</style>

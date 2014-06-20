@@ -13,6 +13,51 @@ Unless required by applicable law or agreed to in writing, software distributed
   specific language governing permissions and limitations under the License.
 ---  END LICENSE_HEADER BLOCK  ---
 %>
+<style>
+
+    /* Sticky footer styles
+      -------------------------------------------------- */
+
+    html,
+    body {
+        height: 100%;
+        /* The html and body elements cannot have any padding or margin. */
+    }
+
+    /* Wrapper for page content to push down footer */
+    #wrap {
+        min-height: 60%;
+        height: auto !important;
+        height: 100%;
+        /* Negative indent footer by it's height */
+        margin: 0 auto -380px;
+    }
+
+    /* Set the fixed height of the footer here */
+    #push{
+        height: 400px;
+    }
+    #footer {
+
+    }
+
+    /* Lastly, apply responsive CSS fixes as necessary */
+    @media (max-width: 767px) {
+        #footer {
+            margin-left: -20px;
+            margin-right: -20px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+    }
+
+</style>
+<!-- Part 1: Wrap all page content here -->
+<div id="wrap">
+
+
+  <div id="push"></div>
+</div>
 
 <div id="footer">
 <div class="container-fluid">
