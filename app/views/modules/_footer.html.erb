@@ -65,40 +65,41 @@ Unless required by applicable law or agreed to in writing, software distributed
     <div class="span12 offset1">
       <div class="span3">
         <ul class="unstyled">
-          <li><a href="#">Hours</a></li>
-          <li><a href="#">Staff Directory</a></li>
-          <li><a href="#">Jobs</a></li>
-          <li><a href="#">Fellowships & Internships</a></li>
-          <li><a href="#">Press</a></li>
-          <li><a href="#">Site Feedback</a></li>
+          <li> <%= link_to "Hours", "http://www.library.virginia.edu/hours", target: "_blank" %> </li>
+          <li> <%= link_to "Staff Directory", "http://www.library.virginia.edu/staff", target: "_blank" %> </li>
+          <li> <%= link_to "Jobs", "http://www.library.virginia.edu/jobs/", target: "_blank" %> </li>
+          <li> <%= link_to "Fellowships & Internships", "http://www.library.virginia.edu/jobs/fellowships/", target: "_blank" %> </li>
+          <li> <%= link_to "Press", "http://www.library.virginia.edu/press/", target: "_blank" %> </li>
+          <li> <%= link_to "Site Feedback", "mailto:site-feedback@virginia.edu?subject=U.Va.%20Library%20Site%20Feedback&body=Thank%20you%20for%20your%20feedback!%20%20Are%20you%20having%20trouble%20finding%20information%20on%20the%20new%20Library%20site%20or%20have%20you%20encountered%20an%20error?%20Please%20let%20us%20know%20below.%0A%0APage%20you%20were%20on%3A%20http://www.avalon.virginia.edu/%0A%0AMy%20feedback%3A%20", target: "_blank" %> </li>
 
         </ul>
       </div>
       <div class="span3">
         <ul class="unstyled">
           <li>Using the Library<li>
-          <li><a href="#">Library Use Policies</a></li>
-          <li><a href="#">Off-Grounds Access</a></li>
-          <li><a href="#">Library & ITS Accounts</a></li>
-          <li><a href="#">Accessibility Services</a></li>
+          <li> <%= link_to "Library Use Policies", "http://www.library.virginia.edu/policies/", target: "_blank" %> </li>
+          <li> <%= link_to "Off-Grounds Access", "http://www.library.virginia.edu/services/off-grounds-access/", target: "_blank" %> </li>
+          <li> <%= link_to "Library & ITS Accounts", "http://guides.lib.virginia.edu/accounts", target: "_blank" %> </li>
+          <li> <%= link_to "Accessibility Services", "http://www.library.virginia.edu/services/accessibility-services/", target: "_blank" %> </li>
         </ul>
       </div>
       <div class="span3">
         <ul class="unstyled">
+
           <li>Initiatives<li>
-          <li><a href="#">Libra</a></li>
-          <li><a href="#">Project Hydra</a></li>
+          <li> <%= link_to "Libra", "http://www.library.virginia.edu/blog/projects/libra/", target: "_blank" %>  </li>
+          <li> <%= link_to "Project Hydra", "http://www.library.virginia.edu/blog/projects/hydra/", target: "_blank" %> </li>
         </ul>
       </div>
       <div class="span3">
         <ul class="unstyled">
           <li>Other Sites<li>
-          <li><a href="#">UVaCollab</a></li>
-          <li><a href="#">SIS</a></li>
-          <li><a href="#">ITS</a></li>
-          <li><a href="#">Cavalier Advantage</a></li>
-          <li><a href="#">U.Va. Home</a></li>
-          <li><a href="#">Library Staff Site</a></li>
+          <li> <%= link_to "UVaCollab", "http://collab.itc.virginia.edu/", target: "_blank" %> </li>
+          <li> <%= link_to "SIS", "http://www.virginia.edu/sis/", target: "_blank" %> </li>
+          <li> <%= link_to "ITS", "http://its.virginia.edu/", target: "_blank" %> </li>
+          <li> <%= link_to "Cavalier Advantage", "http://www.virginia.edu/cavalieradvantage/", target: "_blank" %> </li>
+          <li> <%= link_to "U.Va. Home", "http://www.virginia.edu/", target: "_blank" %> </li>
+          <li> <%= link_to "Library Staff Site", "http://staffweb.lib.virginia.edu/", target: "_blank" %> </li>
         </ul>
       </div>
     </div>
@@ -110,7 +111,13 @@ Unless required by applicable law or agreed to in writing, software distributed
           (Parcel Service Delivery: Alderman Library, 160 McCormick Road, Charlottesville, VA 22903)
         </p>
       </div>
+      <div class="span2 offset1">
+        <p class="muted" style="margin-top:20px;">
+          <%= link_to(image_tag("hydra.png", :size => "112x94", alt: "Powered by Hydra", target: "_blank"), "http://www.projecthydra.org") %>
+        </p>
+      </div>
     </div>
+   </div>
   </div>
 
   <hr>

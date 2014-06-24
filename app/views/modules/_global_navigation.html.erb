@@ -53,8 +53,15 @@ Unless required by applicable law or agreed to in writing, software distributed
                  <%=user_key %>
                   <b class="caret"></b></a>
                   <ul class="dropdown-menu">
-                    <li><a href="/user/preferences"><i class="icon-cog"></i> Preferences</a></li>
-                    <li><a href="/help/support"><i class="icon-envelope"></i> Contact Support</a></li>
+                    <li>
+                      <%= link_to 'http://its.virginia.edu/helpdesk/' do %>
+                          <i class="icon-envelope"></i>
+                          Contact Support
+                      <% end %>
+                    </li>
+
+
+
                     <li class="divider"></li>
                     <li>
                       <%= link_to_if user_signed_in?, 'Sign out', destroy_user_session_path do %>
@@ -65,7 +72,12 @@ Unless required by applicable law or agreed to in writing, software distributed
                   </ul>
                 </li>
             <% else %>
-                <li><%= link_to 'Sign in', new_user_session_path %></li>
+                <li>
+                  <%= link_to  new_user_session_path do %>
+                      <i class="icon-user"></i>
+                      Sign in
+                  <% end %>
+                </li>
             <% end %>
           </ul>
         </div>

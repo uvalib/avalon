@@ -18,11 +18,12 @@ Unless required by applicable law or agreed to in writing, software distributed
 <% end %>
 
 <div class="row-fluid">
-  <div class="span2" id="left_column">
+
+  <div id="left_column" class="span2">
     <%= render "ingest_steps" %>
     <%= render "remove_item" %>
   </div>
-  
+  &nbsp;
   <div id="main_body" class="span10">
 
   <% if flash[:notice] %>

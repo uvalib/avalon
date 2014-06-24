@@ -3933,10 +3933,6 @@ input[type="submit"].btn.btn-mini {
   transition: opacity 0.3s linear, top 0.3s ease-out;
 }
 
-.modal.fade.in {
-  top: 10%;
-}
-
 .modal-header {
   padding: 9px 15px;
   border-bottom: 1px solid #eee;
@@ -5492,7 +5488,6 @@ legend {
 
 .modal-header {
   color: #ffffff;
-  background-color: #0D3268;
   border-bottom: none;
 }
 

@@ -14,7 +14,7 @@ Unless required by applicable law or agreed to in writing, software distributed
 ---  END LICENSE_HEADER BLOCK  ---
 %>
 <div class="tabbable tabs-left">
-  <ul class="nav nav-tabs" style="margin-right:-4px; min-width:200px">
+  <ul class="nav nav-tabs" style="margin-right:-4px;">
     <% @workflow_steps.to_a.each do |step| %>
         <%= render "ingest_step", step: step,  active: @mediaobject.workflow.active?(step.step) %>
     <% end %>
@@ -22,6 +22,13 @@ Unless required by applicable law or agreed to in writing, software distributed
     <%= link_to media_object_path(@mediaobject), class: 'nav-disabled' do %>
         Preview
     <% end %>
-    <br> <small class="nav-disabled black">How end users see the item</small>
+    <br> <small class="nav-disabled black">End users view of item</small>
   </ul>
 </div>
+<div class="clearfix"></div>
+
+<style>
+  li .active, .nav-disabled {
+      padding-right:20px;
+  }
+</style>
