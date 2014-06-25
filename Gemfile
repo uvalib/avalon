@@ -69,7 +69,7 @@
   gem 'loofah'
   gem 'omniauth-identity'
   gem 'omniauth-lti', git: "https://github.com/avalonmediasystem/omniauth-lti.git", tag: 'avalon-r4'
-  gem 'omniauth-netbadge'
+  gem 'uva-omniauth-shibboleth'
 
   gem 'mediainfo'
   gem 'delayed_job', '=4.0.4'
