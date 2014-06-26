@@ -67,7 +67,7 @@ $loginLinkBackgroundColor: rgb(251, 176, 64);
 
 /* Sidenav */
 
-$sidenavHeaderBackgroundColor: $greenBG;
+$sidenavHeaderBackgroundColor: #ecf0f1;
 
 /* Search Facets */
 $constraint_bg_color: $greenBG;
@@ -332,7 +332,7 @@ textarea {
 body {
   margin: 0;
   font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 20px;
   color: #0D3268;
   background-color: #ffffff;
@@ -1924,7 +1924,7 @@ button.close {
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
   vertical-align: middle;
   cursor: pointer;
-  background-color: #bfc6cb;
+  background-color: #D8E2E1;
   *background-color: #d0d5d9;
   background-image: -moz-linear-gradient(top, #b4bcc2, #d0d5d9);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#b4bcc2), to(#d0d5d9));
@@ -3933,10 +3933,6 @@ input[type="submit"].btn.btn-mini {
   transition: opacity 0.3s linear, top 0.3s ease-out;
 }
 
-.modal.fade.in {
-  top: 10%;
-}
-
 .modal-header {
   padding: 9px 15px;
   border-bottom: 1px solid #eee;
@@ -5492,7 +5488,6 @@ legend {
 
 .modal-header {
   color: #ffffff;
-  background-color: #0D3268;
   border-bottom: none;
 }
 
@@ -5690,7 +5685,7 @@ thead {
   border-radius: 3px;
 }
 .subtitle {
-  font-size:14px;
+  font-size:10px;
 }
 #custom-search-form button {
   border: 0;

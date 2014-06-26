@@ -32,11 +32,11 @@ Unless required by applicable law or agreed to in writing, software distributed
           <li class="divider-vertical"></li>
           <li><%= link_to 'Browse', catalog_index_path(search_field: 'all_fields', utf8: '✓', q: '') %></li>
           <% if can? :read, Admin::Collection %>
-              <li class=<%= active_for_controller('admin/collections') %>><%= link_to 'Manage Content', admin_collections_path %></li>
+              <li class=<%= active_for_controller('admin/collections') %>><%= link_to 'Content', admin_collections_path %></li>
           <% end %>
 
           <% if can? :manage, Admin::Group %>
-              <li class=<%= active_for_controller('admin/groups') %>><%= link_to 'Manage Groups', admin_groups_path, target: '_admin' %></li>
+              <li class=<%= active_for_controller('admin/groups') %>><%= link_to 'Groups', admin_groups_path, target: '_admin' %></li>
           <% end %>
           <% if user_session && user_session[:virtual_groups].present? %>
               <% user_session[:virtual_groups].each do |vgroup| %>
@@ -50,19 +50,37 @@ Unless required by applicable law or agreed to in writing, software distributed
         </ul>
         <div class="pull-right">
           <ul class="nav pull-right">
+            <% if user_signed_in? %>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                 <%=user_key %>
+                  <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <%= link_to 'http://its.virginia.edu/helpdesk/' do %>
+                          <i class="icon-envelope"></i>
+                          Contact Support
+                      <% end %>
+                    </li>
 
-            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%=user_key %> <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="/user/preferences"><i class="icon-cog"></i> Preferences</a></li>
-                <li><a href="/help/support"><i class="icon-envelope"></i> Contact Support</a></li>
-                <li class="divider"></li>
+
+
+                    <li class="divider"></li>
+                    <li>
+                      <%= link_to_if user_signed_in?, 'Sign out', destroy_user_session_path do %>
+                          <%# Fallback if the test above fails %>
+                          <%= link_to 'Sign in', new_user_session_path %>
+                      <% end %>
+                    </li>
+                  </ul>
+                </li>
+            <% else %>
                 <li>
-                  <%= link_to_if user_signed_in?, 'Sign out', destroy_user_session_path do %>
-                      <%# Fallback if the test above fails %>
-                      <%= link_to 'Sign in', new_user_session_path %>
+                  <%= link_to  new_user_session_path do %>
+                      <i class="icon-user"></i>
+                      Sign in
                   <% end %>
-              </ul>
-            </li>
+                </li>
+            <% end %>
           </ul>
         </div>
       </div>
