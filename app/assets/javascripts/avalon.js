@@ -31,6 +31,10 @@ $('.popover-target').popover({
   }
 });
 
+$('.facet_limit').on('click', function() {
+  $(this).find('.chevron_toggleable').toggleClass('icon-chevron-right icon-chevron-down');
+});
+
 $('#show_object_tree').on('click', function() {
   var ot = $('#object_tree')
   ot.load(ot.data('src'));

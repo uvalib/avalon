@@ -14,7 +14,7 @@ Unless required by applicable law or agreed to in writing, software distributed
 ---  END LICENSE_HEADER BLOCK  ---
 %>
 <div class="tabbable tabs-left">
-  <ul class="nav nav-tabs" style="margin-right:-4px;">
+  <ul class="nav nav-tabs" style="margin-right:-12px;">
     <% @workflow_steps.to_a.each do |step| %>
         <%= render "ingest_step", step: step,  active: @mediaobject.workflow.active?(step.step) %>
     <% end %>
