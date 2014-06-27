@@ -18,7 +18,7 @@ Unless required by applicable law or agreed to in writing, software distributed
       <section id="progress" data-progress-url="<%= progress_media_object_path :id => @mediaobject.pid, :format => :json %>">
         <% if @masterFiles.blank? %>
           <div class="alert">
-            <p>No media is associated with this item</p>
+            No media is associated with this item
           </div>
         <% elsif @masterFiles.any? { |mf| not mf.succeeded? } %>
           <% content_for :page_scripts do %>
