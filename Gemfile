@@ -26,13 +26,10 @@
 
   platforms :jruby do
     gem 'jruby-openssl'
-    gem 'activerecord-jdbcsqlite3-adapter'
-    gem 'jdbc-sqlite3'
     gem 'therubyrhino'
   end
 
   platforms :ruby do
-    gem 'sqlite3'
     gem 'execjs'
     gem 'therubyracer', '= 0.10.2'
   end
@@ -53,7 +50,7 @@
   gem 'loofah'
   gem 'omniauth-identity'
   gem 'omniauth-lti', git: "https://github.com/avalonmediasystem/omniauth-lti.git", tag: 'avalon-r3'
-  gem 'uva-omniauth-shibboleth'
+  gem 'omniauth-shibboleth', git: "https://github.com/uvalib/omniauth-shibboleth.git", tag: 'v0.1.0'
 
   gem 'mediainfo'
   gem 'delayed_job_active_record'
@@ -63,6 +60,7 @@
   gem 'equivalent-xml'
 
   group :assets, :production do
+    gem 'mysql2', '~>0.3.11'
     gem 'coffee-rails', "~> 3.2.1"
     gem 'uglifier', '>= 1.0.3'
     gem 'jquery-rails', "~> 2.1.4"
@@ -81,6 +79,7 @@
 
   # For testing.  You will probably want to use these to run the tests you write for your hydra head
   group :development, :test do
+    gem 'sqlite3'
     #gem 'better_errors'
     #gem 'binding_of_caller'
     gem 'meta_request'
