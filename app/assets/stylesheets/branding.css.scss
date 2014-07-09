@@ -76,7 +76,6 @@ $constraint_border_color: scale-color($greenBG, $lightness: -20%);
 /* Change default breakpoint for the navigation bar */
 $navCollapseWidth: 650px;
 
-
 .white{
   color:white;
 }
@@ -90,6 +89,7 @@ $navCollapseWidth: 650px;
  *
  * Designed and built with all the love in the world by @mdo and @fat.
  */
+
 footer li {
   list-style-type: none;
   display: block;
@@ -1909,6 +1909,25 @@ button.close {
   background: transparent;
   border: 0;
   -webkit-appearance: none;
+}
+input.btn.btn-primary {
+  color:white;
+}
+.btn, .access-block input[type=submit] {
+  color:#0D3268;
+}
+input[type=submit] {
+  color: #0D3268;
+}
+a.btn.btn-mini {
+  color:white;
+}
+a.btn, input.btn {
+  color: #0D3268;
+}
+
+a.btn-primary {
+  color:white;
 }
 
 .btn {
@@ -5071,7 +5090,6 @@ div.subnav .nav > .active > a:hover {
 
 .btn {
   padding: 9px 20px;
-  color: #ffffff;
   text-decoration: none;
   text-shadow: none;
   background-image: none;
@@ -5374,7 +5392,7 @@ legend {
 .alert {
   color: #ffffff;
   text-shadow: none;
-  background-color: #f39c12;
+  background-color: #e95d4e;
 }
 
 .alert h1,
@@ -5391,7 +5409,7 @@ legend {
 }
 
 .alert-success {
-  background-color: #f39c12;
+  background-color: #18bc9c;
 }
 
 .alert-info {
@@ -5525,7 +5543,7 @@ legend {
 
 @media (max-width: 979px) {
   .navbar .nav-collapse .nav > li > a {
-    color: #ffffff;
+    color: white;
   }
   .navbar .nav-collapse .nav > li > a:hover {
     background-color: #18bc9c;
