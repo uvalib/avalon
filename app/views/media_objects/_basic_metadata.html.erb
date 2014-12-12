@@ -31,7 +31,7 @@ Unless required by applicable law or agreed to in writing, software distributed
   <%= render partial: 'text_fields',
              locals: {media: media, field: :creator,
                       count: [3, @mediaobject.creator.length].max,
-                      text_label: 'Main contributor(s)', 
+                      text_label: 'Creator(s)',
                       options: {required: true, tooltip: true, dynamic: true}} %>
                     
   <%= render partial: 'text_field', 
@@ -79,7 +79,7 @@ Unless required by applicable law or agreed to in writing, software distributed
   <%= render partial: 'text_fields',
              locals: {media: media, field: :geographic_subject,
                       count: [3, @mediaobject.geographic_subject.length].max,
-                      text_label: 'Location(s)', 
+                      text_label: 'Geographic subject(s)',
                       options: {tooltip: true, dynamic: true}} %>
   <%= render partial: 'text_field',
              locals: {media: media, field: :permalink,
