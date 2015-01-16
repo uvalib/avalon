@@ -31,7 +31,7 @@ Unless required by applicable law or agreed to in writing, software distributed
 
   <%= render partial: 'text_field',
              locals: {form: form, field: :creator,
-                      options: {display_label: 'Main contributor(s)', required: true, multivalued: true}} %>
+                      options: {display_label: 'Creator(s)', required: true, multivalued: true}} %>
                     
   <%= render partial: 'text_field', 
              locals: {form: form, field: :date_issued,
@@ -87,7 +87,7 @@ Unless required by applicable law or agreed to in writing, software distributed
                       options: {display_label: 'Time period(s)', multivalued: true}} %>
   <%= render partial: 'text_field',
              locals: {form: form, field: :geographic_subject,
-                      options: {display_label: 'Location(s)', multivalued: true}} %>
+                      options: {display_label: 'Geographic Subject(s)', multivalued: true}} %>
   <%= render partial: 'text_field',
              locals: {form: form, field: :permalink,
                       options: {}} %>
