@@ -4,3 +4,10 @@ units:
   - Robertson Media Center
   - University of Virginia School of Architecture
   - University of Virginia McIntire Department of Music
+
+identifier_types:
+ local: Catalog Key
+ oclc: OCLC
+ lccn: LCCN
+ other: Other
+
