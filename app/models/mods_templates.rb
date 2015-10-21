@@ -99,6 +99,9 @@ module ModsTemplates
       def add_contributor(name, attrs={})
         add_child_node(ng_xml.root, :name, name, attrs)
       end
+      def add_other_name value, attributes
+        add_child_node(ng_xml.root, :name, value, {role_code: attributes, role_text: ModsDocument::NAME_TYPES[attributes], primary: false})
+      end
 
       # Simple Subject Templates
       define_template(:simple_subject) do |xml, text, type| 

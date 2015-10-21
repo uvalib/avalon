@@ -50,6 +50,13 @@ Unless required by applicable law or agreed to in writing, software distributed
                       options: {multivalued: true}} %>
 
   <%= render partial: 'text_field',
+                 locals: {form: form, field: :other_name,
+                          options: {multivalued: true,
+                                    display_label: 'Other personal names',
+                                    dropdown_field: :other_name_code,
+                                    dropdown_options: ModsDocument::NAME_TYPES }} %>
+
+  <%= render partial: 'text_field',
              locals: {form: form, field: :publisher,
                       options: {multivalued: true}} %>
 

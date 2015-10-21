@@ -90,6 +90,17 @@ module MediaObjectsHelper
        mediaobject.note.present? ? mediaobject.note.select{|n| n[0]==type}.collect{|n|n[1]} : []
      end
 
+     def display_other_name mediaobject
+       return nil if mediaobject.other_name.nil?
+        names_string = "";
+        name_types = ModsDocument::NAME_TYPES.clone
+        mediaobject.other_name.each_with_index do | name, i |
+          names_string += ", " if i > 0
+          names_string += "#{name[1]} (#{name_types[name[0]]})"
+        end
+        names_string
+     end
+
      def display_language mediaobject
        mediaobject.language.collect{|l|l[:text]}.uniq
      end

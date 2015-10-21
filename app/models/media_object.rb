@@ -159,7 +159,9 @@ class MediaObject < ActiveFedora::Base
   has_attributes :physical_description, datastream: :descMetadata, at: [:physical_description], multiple: false
   has_attributes :other_identifier, datastream: :descMetadata, at: [:other_identifier], multiple: true
   has_attributes :record_identifier, datastream: :descMetadata, at: [:record_identifier], multiple: true
-  
+
+  has_attributes :other_name, datastream: :descMetadata, at: [:other_name], multiple: true
+
   has_metadata name:'displayMetadata', :type =>  ActiveFedora::SimpleDatastream do |sds|
     sds.field :duration, :string
   end
@@ -260,6 +262,9 @@ class MediaObject < ActiveFedora::Base
     if values[:note]
       values[:note]=values[:note].zip(values.delete(:note_type)).map{|v| {value: v[0], attributes: v[1]}}
     end
+    if values[:other_name]
+      values[:other_name] = {value: values[:other_name], attributes: values.delete(:other_name_code)}
+    end
     if values[:other_identifier]
       values[:other_identifier]=values[:other_identifier].zip(values.delete(:other_identifier_type)).map{|v| {value: v[0], attributes: v[1]}}
     end
@@ -308,6 +313,9 @@ class MediaObject < ActiveFedora::Base
   end
   def other_identifier
     descMetadata.other_identifier.present? ? descMetadata.other_identifier.type.zip(descMetadata.other_identifier) : nil
+  end
+  def other_name
+    descMetadata.other_name.present? ? descMetadata.other_name_code.zip(descMetadata.other_name_part) : nil
   end
 
 
@@ -404,6 +412,7 @@ class MediaObject < ActiveFedora::Base
     all_text_values << solr_doc["date_sim"]
     all_text_values << solr_doc["notes_sim"]
     all_text_values << solr_doc["table_of_contents_sim"]
+    all_text_values << solr_doc["other_names_sim"]
     all_text_values << solr_doc["other_identifier_sim"]
     solr_doc["all_text_timv"] = all_text_values.flatten
     solr_doc.each_pair { |k,v| solr_doc[k] = v.is_a?(Array) ? v.select { |e| e =~ /\S/ } : v }

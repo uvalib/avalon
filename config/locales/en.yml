@@ -132,6 +132,8 @@ en:
       Other Identifier should be used for an external record identifier that can connect the Avalon item to a catalog record or other record for the original item. This identifier differs from Bibliographic Identifier in that it is not used to retrieve a record from another system. Type specifies the type of external record identifier.
     table_of_contents: |
       Table of Contents is used to provide the titles of separate works or parts of a resource. Information provided may also contain statements of responsibility or other sequential designations. Titles of separate works or parts should be separated by ' -- ' (space-hyphen-hyphen-space).
+    other_name: |
+      Personal name values other than creator or contributor.
 
   file_upload_tip:
     label: |
