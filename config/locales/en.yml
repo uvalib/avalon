@@ -35,27 +35,6 @@ en:
       information about the item). Collections will be aggregated for browsing 
       access. Examples: Variations, Indiana University Libraries Film Archive, 
       IUCAT, NUcat.
-    contributor: |
-      Contributors are persons or bodies associated with the item but not considered
-      primary to the creation of its content. Examples of this would be performers in
-      a band or opera, conductor, arranger, cinematographer, and choreographer. At
-      this time this is no ability to specify a contributor as a corporate body. When
-      possible, use the <a href="http://id.loc.gov/authorities/names.html"
-      target="_blank">Library of Congress Name Authority File</a>.  This value is
-      persisted in a mods record in the <em>name[@type='personal']/namePart</em>
-      element with a <em>role/roleTerm</em> value of 'cre'.
-    creator: |
-      <strong>Required field.</strong> Creators are the primary persons
-      or bodies associated with the creation of the content.  Creators
-      will be included in search results display and aggregated for browsing
-      access. At this time there is no ability to specify a creator as
-      a corporate body. When possible, use the <a
-      href="http://id.loc.gov/authorities/names.html" target="_blank">Library of
-      Congress Name Authority File</a>.    This value is persisted in a mods record
-      in the <em>name[@type='personal']/namePart</em> element with a
-      <em>role/roleTerm</em> value of 'cre'.  This is indexed in such a way that it
-      appears as the Author facet in virgo and is prioritized in advanced searches
-      for author.
     date_created: |
       Creation date should only be used if Date is a re-issue date. Then Creation date
       would contain the original publication date. Enter date information in a format
@@ -132,8 +111,16 @@ en:
       Other Identifier should be used for an external record identifier that can connect the Avalon item to a catalog record or other record for the original item. This identifier differs from Bibliographic Identifier in that it is not used to retrieve a record from another system. Type specifies the type of external record identifier.
     table_of_contents: |
       Table of Contents is used to provide the titles of separate works or parts of a resource. Information provided may also contain statements of responsibility or other sequential designations. Titles of separate works or parts should be separated by ' -- ' (space-hyphen-hyphen-space).
-    other_name: |
-      Personal name values other than creator or contributor.
+    personal_name: |
+      Personal name values.   When possible, use the <a href="http://id.loc.gov/authorities/names.html"
+      target="_blank">Library of Congress Name Authority File</a>.  This value is
+      persisted in a mods record in the <em>name[@type='personal']/namePart</em>
+      element with a <em>role/roleTerm</em> value corresponding to the selected role.
+    corporate_name: |
+      Corporate name values.   When possible, use the <a href="http://id.loc.gov/authorities/names.html"
+      target="_blank">Library of Congress Name Authority File</a>.  This value is
+      persisted in a mods record in the <em>name[@type='corporate']/namePart</em>
+      element with a <em>role/roleTerm</em> value corresponding to the selected role.
 
   file_upload_tip:
     label: |

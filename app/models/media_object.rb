@@ -47,12 +47,11 @@ class MediaObject < ActiveFedora::Base
   # that preferred controlled vocabulary standards are used
   
   # Guarantees that the record is minimally complete - ie that within the descriptive
-  # metadata the title, creator, date of creation, and identifier fields are not 
-  # blank. Since identifier is set automatically we only need to worry about creator,
-  # title, and date of creation.
+  # metadata the title, date of creation, and identifier fields are not blank.
+  # Since identifier is set automatically we only need to worry about title, and
+  # date of creation.
 
   validates :title, :presence => true
-  validate  :validate_creator
   validate  :validate_language
   validates :date_issued, :presence => true
   validate  :report_missing_attributes
@@ -74,12 +73,6 @@ class MediaObject < ActiveFedora::Base
     Array(related_item_url).each{|i|errors.add(:related_item_url, "Bad URL") unless i[:url] =~ URI::regexp(%w(http https))}
   end
 
-  def validate_creator
-    if Array(creator).select { |c| c.present? }.empty?
-      errors.add(:creator, I18n.t("errors.messages.blank"))
-    end
-  end
-
   def validate_dates
     [:date_created, :date_issued, :copyright_date].each do |d|
       if self.send(d).present? && Date.edtf(self.send(d)).nil?
@@ -99,7 +92,6 @@ class MediaObject < ActiveFedora::Base
     :translated_title => :translated_title,
     :uniform_title => :uniform_title,
     :statement_of_responsibility => :statement_of_responsibility,
-    :creator => :creator,
     :date_created => :date_created,
     :date_issued => :date_issued,
     :copyright_date => :copyright_date,
@@ -132,7 +124,6 @@ class MediaObject < ActiveFedora::Base
   has_attributes :translated_title, datastream: :descMetadata, at: [:translated_title], multiple: true
   has_attributes :uniform_title, datastream: :descMetadata, at: [:uniform_title], multiple: true
   has_attributes :statement_of_responsibility, datastream: :descMetadata, at: [:statement_of_responsibility], multiple: false
-  has_attributes :creator, datastream: :descMetadata, at: [:creator], multiple: true
   has_attributes :date_created, datastream: :descMetadata, at: [:date_created], multiple: false
   has_attributes :date_issued, datastream: :descMetadata, at: [:date_issued], multiple: false
   has_attributes :copyright_date, datastream: :descMetadata, at: [:copyright_date], multiple: false
@@ -158,7 +149,8 @@ class MediaObject < ActiveFedora::Base
   has_attributes :other_identifier, datastream: :descMetadata, at: [:other_identifier], multiple: true
   has_attributes :record_identifier, datastream: :descMetadata, at: [:record_identifier], multiple: true
 
-  has_attributes :other_name, datastream: :descMetadata, at: [:other_name], multiple: true
+  has_attributes :personal_name, datastream: :descMetadata, at: [:personal_name], multiple: true
+  has_attributes :corporate_name, datastream: :descMetadata, at: [:corporate_name], multiple: true
 
   has_metadata name:'displayMetadata', :type =>  ActiveFedora::SimpleDatastream do |sds|
     sds.field :duration, :string
@@ -260,8 +252,11 @@ class MediaObject < ActiveFedora::Base
     if values[:note]
       values[:note]=values[:note].zip(values.delete(:note_type)).map{|v| {value: v[0], attributes: v[1]}}
     end
-    if values[:other_name]
-      values[:other_name] = {value: values[:other_name], attributes: values.delete(:other_name_code)}
+    if values[:personal_name]
+      values[:personal_name] = {value: values[:personal_name], attributes: values.delete(:personal_name_code)}
+    end
+    if values[:corporate_name]
+      values[:corporate_name] = {value: values[:corporate_name], attributes: values.delete(:corporate_name_code)}
     end
     if values[:other_identifier]
       values[:other_identifier]=values[:other_identifier].zip(values.delete(:other_identifier_type)).map{|v| {value: v[0], attributes: v[1]}}
@@ -312,9 +307,13 @@ class MediaObject < ActiveFedora::Base
   def other_identifier
     descMetadata.other_identifier.present? ? descMetadata.other_identifier.type.zip(descMetadata.other_identifier) : nil
   end
-  def other_name
-    descMetadata.other_name.present? ? descMetadata.other_name_code.zip(descMetadata.other_name_part) : nil
+  def personal_name
+    descMetadata.personal_name.present? ? descMetadata.personal_name_code.zip(descMetadata.personal_name_part) : nil
   end
+  def corporate_name
+    descMetadata.corporate_name.present? ? descMetadata.corporate_name_code.zip(descMetadata.corporate_name_part) : nil
+  end
+
 
 
   # This method is one way in that it accepts class attributes and
@@ -388,14 +387,11 @@ class MediaObject < ActiveFedora::Base
     solr_doc[Solrizer.default_field_mapper.solr_name("unit", :symbol, type: :string)] = collection.unit if collection.present?
     indexer = Solrizer::Descriptor.new(:string, :stored, :indexed, :multivalued)
     solr_doc[Solrizer.default_field_mapper.solr_name("read_access_virtual_group", indexer)] = virtual_read_groups
-    solr_doc["dc_creator_tesim"] = self.creator
     solr_doc["dc_publisher_tesim"] = self.publisher
     solr_doc["title_ssort"] = self.title
-    solr_doc["creator_ssort"] = Array(self.creator).join(', ')
     #Add all searchable fields to the all_text_timv field
     all_text_values = []
     all_text_values << solr_doc["title_tesi"]
-    all_text_values << solr_doc["creator_ssim"]
     all_text_values << solr_doc["unit_ssim"]
     all_text_values << solr_doc["collection_ssim"]
     all_text_values << solr_doc["summary_ssi"]
@@ -409,7 +405,8 @@ class MediaObject < ActiveFedora::Base
     all_text_values << solr_doc["date_sim"]
     all_text_values << solr_doc["notes_sim"]
     all_text_values << solr_doc["table_of_contents_sim"]
-    all_text_values << solr_doc["other_names_sim"]
+    all_text_values << solr_doc["personal_names_sim"]
+    all_text_values << solr_doc["corporate_names_sim"]
     all_text_values << solr_doc["other_identifier_sim"]
     solr_doc["all_text_timv"] = all_text_values.flatten
     solr_doc.each_pair { |k,v| solr_doc[k] = v.is_a?(Array) ? v.select { |e| e =~ /\S/ } : v }

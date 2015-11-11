@@ -90,15 +90,26 @@ module MediaObjectsHelper
        mediaobject.note.present? ? mediaobject.note.select{|n| n[0]==type}.collect{|n|n[1]} : []
      end
 
-     def display_other_name mediaobject
-       return nil if mediaobject.other_name.nil?
-        names_string = "";
-        name_types = ModsDocument::NAME_TYPES.clone
-        mediaobject.other_name.each_with_index do | name, i |
-          names_string += ", " if i > 0
-          names_string += "#{name[1]} (#{name_types[name[0]]})"
-        end
-        names_string
+     def gather_all_names mediaobject
+         gather_names(mediaobject.personal_name.nil? ? mediaobject.corporate_name : mediaobject.corporate_name.nil? ? mediaobject.personal_name : mediaobject.personal_name + mediaobject.corporate_name)
+     end
+
+     def gather_personal_names mediaobject
+       gather_names mediaobject.personal_name
+     end
+
+     def gather_corporate_names mediaobject
+       gather_names mediaobject.corporate_name
+     end
+
+     def gather_names names
+       return nil if names.nil? || names.empty?
+       name_hash = Hash.new{|h,  k| h[k] = []}
+       name_types = ModsDocument::NAME_TYPES.clone
+       names.each do | name |
+         name_hash[name_types[name[0]]] << name[1]
+       end
+       name_hash
      end
 
      def display_language mediaobject

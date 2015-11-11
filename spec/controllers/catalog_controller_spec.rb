@@ -114,7 +114,7 @@ describe CatalogController do
 
     describe "search fields" do
       let(:media_object) { FactoryGirl.create(:fully_searchable_media_object) }
-      ["title_tesi", "creator_ssim", "contributor_sim", "unit_ssim", "collection_ssim", "summary_ssi", "publisher_sim", "subject_topic_sim", "subject_geographic_sim", "subject_temporal_sim", "genre_sim", "physical_description_si", "language_sim", "date_sim", "notes_sim", "table_of_contents_sim", "other_identifier_sim" ].each do |field|
+      ["title_tesi", "contributor_sim", "unit_ssim", "collection_ssim", "summary_ssi", "publisher_sim", "subject_topic_sim", "subject_geographic_sim", "subject_temporal_sim", "genre_sim", "physical_description_si", "language_sim", "date_sim", "notes_sim", "table_of_contents_sim", "other_identifier_sim" ].each do |field|
         it "should find results based upon #{field}" do
           query = Array(media_object.to_solr[field]).first
           #split on ' ' and only search on the first word of a multiword field value
@@ -141,10 +141,6 @@ describe CatalogController do
       it "should sort correctly by date" do
         get :index, :sort => 'date_ssi desc, title_ssort asc'
         expect(assigns(:document_list).map(&:id)).to eq [m3.id, m2.id, m1.id]
-      end
-      it "should sort correctly by creator" do
-        get :index, :sort => 'creator_ssort asc, title_ssort asc'
-        expect(assigns(:document_list).map(&:id)).to eq [m2.id, m1.id, m3.id]
       end
     end
   end

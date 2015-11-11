@@ -84,6 +84,15 @@ module ApplicationHelper
     }
   end
 
+  # Expects values to be a hash where the label is the key and the values
+  # are the values
+  def display_name_metadata(values)
+    return if values.nil? or values.empty?
+    result = ""
+    values.each_pair { | k, v | result += display_metadata(k.to_s, v)}
+    result.html_safe
+  end
+
   def search_result_label item
     if item['title_tesi'].present?
       label = truncate(item['title_tesi'], length: 100)

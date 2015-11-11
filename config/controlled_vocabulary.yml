@@ -29,45 +29,26 @@ note_types:
  venue: Venue/Event Date
 name_types:
   act: Actor
-  anm: Animator
-  ard: Artistic director
   arr: Arranger
-  art: Artist
-  aus: Screenwriter
   aut: Author
-  chr: Choreographer
   cmp: Composer
   cnd: Conductor
   cng: Cinematographer
-  cst: Costume designer
   ctb: Contributor
-  dnc: Dancer
+  cre: Creator
   drt: Director
   dst: Distributor
-  fds: Film distributor
-  fld: Field director
-  flm: Film editor
-  fmd: Film director
-  fmk: Filmmaker
-  fmp: Film producer
+  edt: Editor
+  hst: Host
   itr: Instrumentalist
-  lyr: Lyricist
+  mod: Moderator
   msd: Musical director
   mus: Musician
   nrt: Narrator
-  osp: Onscreen presenter
   pan: Panelist
   pre: Presenter
-  prf: Performer
   pro: Producer
-  rce: Recording engineer
-  rcp: Addressee
-  rdd: Radio director
-  rpc: Radio producer
-  sds: Sound designer
-  sgd: Stage director
+  prn: Production Company
+  aus: Screenwriter
   sng: Singer
-  stl: Storyteller
-  vac: Voice actor
-  vdg: Videographer
-  voc: Vocalist
+  spk: Speaker

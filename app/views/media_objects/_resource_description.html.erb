@@ -30,8 +30,20 @@ Unless required by applicable law or agreed to in writing, software distributed
                       options: {required: true}} %>
 
   <%= render partial: 'text_field',
-             locals: {form: form, field: :creator,
-                      options: {display_label: 'Creator(s)', required: true, multivalued: true}} %>
+                 locals: {form: form, field: :personal_name,
+                          options: {multivalued: true,
+                                    required: false,
+                                    display_label: 'Personal name(s)',
+                                    dropdown_field: :personal_name_code,
+                                    dropdown_options: ModsDocument::NAME_TYPES }} %>
+
+  <%= render partial: 'text_field',
+                 locals: {form: form, field: :corporate_name,
+                          options: {multivalued: true,
+                                    required: false,
+                                    display_label: 'Corporate name(s)',
+                                    dropdown_field: :corporate_name_code,
+                                    dropdown_options: ModsDocument::NAME_TYPES }} %>
                     
   <%= render partial: 'text_field', 
              locals: {form: form, field: :date_issued,
@@ -44,13 +56,6 @@ Unless required by applicable law or agreed to in writing, software distributed
   <%= render partial: 'text_area', 
              locals: {form: form, field: :abstract,
                       options: {display_label: 'Summary'}} %>
-
-  <%= render partial: 'text_field',
-                 locals: {form: form, field: :other_name,
-                          options: {multivalued: true,
-                                    display_label: 'Other personal names',
-                                    dropdown_field: :other_name_code,
-                                    dropdown_options: ModsDocument::NAME_TYPES }} %>
 
   <%= render partial: 'text_field',
              locals: {form: form, field: :publisher,
