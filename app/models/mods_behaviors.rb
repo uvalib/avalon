@@ -41,7 +41,6 @@ module ModsBehaviors
     # Individual fields
     solr_doc['summary_ssi'] = self.find_by_terms(:abstract).text
     solr_doc['publisher_sim'] = gather_terms(self.find_by_terms(:publisher))
-    solr_doc['contributor_sim'] = gather_terms(self.find_by_terms(:contributor))
     solr_doc['subject_sim'] = gather_terms(self.find_by_terms(:subject))
     solr_doc['genre_sim'] = gather_terms(self.find_by_terms(:genre))
 #    solr_doc['physical_dtl_sim'] = gather_terms(self.find_by_terms(:format))

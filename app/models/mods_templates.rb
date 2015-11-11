@@ -96,9 +96,6 @@ module ModsTemplates
       def add_creator(name, attrs={})
         add_child_node(ng_xml.root, :name, name, (attrs).merge(role_code: 'cre', role_text: 'Creator', primary: true))
       end
-      def add_contributor(name, attrs={})
-        add_child_node(ng_xml.root, :name, name, attrs)
-      end
       def add_other_name value, attributes
         add_child_node(ng_xml.root, :name, value, {role_code: attributes, role_text: ModsDocument::NAME_TYPES[attributes], primary: false})
       end

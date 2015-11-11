@@ -33,7 +33,6 @@ Unless required by applicable law or agreed to in writing, software distributed
     <pre><%= @mediaobject.abstract %></pre>
   </dd>
   <% end %>
-  <%= display_metadata('Contributor', @mediaobject.contributor) %>
   <%= display_metadata('Personal Names', display_other_name(@mediaobject)) %>
   <%= display_metadata('Publisher', @mediaobject.publisher) %>
   <%= display_metadata('Genre', @mediaobject.genre) %>

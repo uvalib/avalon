@@ -57,14 +57,12 @@ class ModsDocument < ActiveFedora::OmDatastream
         t.text(:path => 'roleTerm', :attributes => { :type => 'text' })
       end
     end
-    t._contributor_name(:ref => [:name], :path => 'mods/oxns:name[oxns:role/oxns:roleTerm[@type="text"] = "Contributor" or oxns:role/oxns:roleTerm[@type="code"] = "ctb"]')
-    t.contributor(:proxy => [:_contributor_name, :name_part])
     t._creator_name(:ref => [:name], :path => 'mods/oxns:name[oxns:role/oxns:roleTerm[@type="text"] = "Creator" or oxns:role/oxns:roleTerm[@type="code"] = "cre"]')
     t.creator(:proxy => [:_creator_name, :name_part])
     t._primary_creator_name(:ref => [:name], :path => 'mods/oxns:name[@usage="primary"]')
     t.primary_creator(:proxy => [:_creator_name, :name_part])
 
-    t.other_name(:ref => [:name], :path => 'mods/oxns:name[not(oxns:role/oxns:roleTerm[@type="code"] = "cre" or oxns:role/oxns:roleTerm[@type="code"] = "ctb")]')
+    t.other_name(:ref => [:name], :path => 'mods/oxns:name[not(oxns:role/oxns:roleTerm[@type="code"] = "cre")]')
     t.other_name_part(:proxy => [:other_name, :name_part])
     t.other_name_code(:proxy => [:other_name, :role, :code])
 

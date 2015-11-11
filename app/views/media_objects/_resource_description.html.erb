@@ -46,10 +46,6 @@ Unless required by applicable law or agreed to in writing, software distributed
                       options: {display_label: 'Summary'}} %>
 
   <%= render partial: 'text_field',
-             locals: {form: form, field: :contributor,
-                      options: {multivalued: true}} %>
-
-  <%= render partial: 'text_field',
                  locals: {form: form, field: :other_name,
                           options: {multivalued: true,
                                     display_label: 'Other personal names',

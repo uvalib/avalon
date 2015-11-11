@@ -106,7 +106,6 @@ class MediaObject < ActiveFedora::Base
     :abstract => :abstract,
     :note => :note,
     :format => :media_type,
-    :contributor => :contributor,
     :publisher => :publisher,
     :genre => :genre,
     :subject => :topical_subject,
@@ -142,7 +141,6 @@ class MediaObject < ActiveFedora::Base
   has_attributes :format, datastream: :descMetadata, at: [:media_type], multiple: false
   has_attributes :resource_type, datastream: :descMetadata, at: [:resource_type], multiple: true
   # Additional descriptive metadata
-  has_attributes :contributor, datastream: :descMetadata, at: [:contributor], multiple: true
   has_attributes :publisher, datastream: :descMetadata, at: [:publisher], multiple: true
   has_attributes :genre, datastream: :descMetadata, at: [:genre], multiple: true
   has_attributes :subject, datastream: :descMetadata, at: [:topical_subject], multiple: true
@@ -398,7 +396,6 @@ class MediaObject < ActiveFedora::Base
     all_text_values = []
     all_text_values << solr_doc["title_tesi"]
     all_text_values << solr_doc["creator_ssim"]
-    all_text_values << solr_doc["contributor_sim"]
     all_text_values << solr_doc["unit_ssim"]
     all_text_values << solr_doc["collection_ssim"]
     all_text_values << solr_doc["summary_ssi"]
