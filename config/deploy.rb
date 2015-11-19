@@ -11,7 +11,7 @@ set(:whenever_command) { "bundle exec whenever" }
 set(:bundle_flags) { "--quiet --path=#{deploy_to}/shared/gems" }
 set :rvm_ruby_string, "2.1.5"
 #set :rvm_type, :system
-set :rvm_path, "/home/dpg3k/.rvm/bin/rvm"
+#set :rvm_path, "/home/dpg3k/.rvm/bin/rvm"
 
 set :scm, :git
 set :keep_releases, 3
