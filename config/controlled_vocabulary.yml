@@ -28,6 +28,7 @@ note_types:
  statement of responsibility: Statement of Responsibility
  venue: Venue/Event Date
 name_types:
+  cre: Creator
   act: Actor
   arr: Arranger
   aut: Author
@@ -35,7 +36,6 @@ name_types:
   cnd: Conductor
   cng: Cinematographer
   ctb: Contributor
-  cre: Creator
   drt: Director
   dst: Distributor
   edt: Editor
