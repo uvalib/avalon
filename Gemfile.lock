@@ -163,6 +163,14 @@ GIT
       hydra-core (= 8.1.0)
       rails (~> 4.0)
 
+GIT
+  remote: https://github.com/uvalib/omniauth-shibboleth.git
+  revision: cdf991b27877bd3a2e24f193e8ff14513ca237c3
+  tag: v0.4.0
+  specs:
+    omniauth-shibboleth (0.4.0)
+      omniauth (~> 1.2.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -290,6 +298,12 @@ GEM
       compass (>= 0.12.2)
     compass-susy-plugin (0.9)
       compass (>= 0.11.1)
+    coveralls (0.8.0)
+      multi_json (~> 1.10)
+      rest-client (>= 1.6.8, < 2)
+      simplecov (~> 0.9.1)
+      term-ansicolor (~> 1.3)
+      thor (~> 0.19.1)
     daemons (1.2.3)
     debug_inspector (0.0.2)
     debugger (1.6.8)
@@ -700,12 +714,15 @@ GEM
     sqlite3 (1.3.10)
     stomp (1.3.4)
     sxp (0.1.5)
+    term-ansicolor (1.3.2)
+      tins (~> 1.0)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
       ref
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (1.4.1)
+    tins (1.6.0)
     twitter-typeahead-rails (0.10.5)
       actionpack (>= 3.1)
       jquery-rails
@@ -754,6 +771,7 @@ DEPENDENCIES
   coffee-rails
   compass-rails
   compass-susy-plugin (~> 0.9.0)
+  coveralls
   daemons
   database_cleaner!
   delayed_job (= 4.0.4)
@@ -802,6 +820,7 @@ DEPENDENCIES
   net-ldap
   omniauth-identity
   omniauth-lti!
+  omniauth-shibboleth!
   pry
   pry-byebug
   pry-debugger
@@ -831,3 +850,6 @@ DEPENDENCIES
   whenever
   with_locking
   xray-rails
+
+BUNDLED WITH
+   1.10.6

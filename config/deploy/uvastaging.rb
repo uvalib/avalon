@@ -35,13 +35,12 @@ set(:shared_children) {
     config/fedora.yml 
     config/lti.yml 
     config/matterhorn.yml 
-    config/minter_state.yml
-    config/role_map_#{fetch(:rails_env)}.yml 
+    config/role_map_#{fetch(:rails_env)}.yml
     config/secrets.yml
     config/solr.yml
-    Gemfile.local 
-    log 
+    log
     tmp/pids
+    db/development.sqlite3
   }.split
 }
 
@@ -69,7 +68,7 @@ namespace :deploy do
   end
 
   task :trust_rvmrc do
-    run "/usr/local/rvm/bin/rvm rvmrc trust #{latest_release}"
+    run "/home/dpg3k/.rvm/bin/rvm rvmrc trust #{latest_release}"
   end
 
   task :start do
