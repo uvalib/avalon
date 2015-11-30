@@ -67,7 +67,7 @@
   gem 'omniauth-identity'
   gem 'omniauth-lti', git: "https://github.com/avalonmediasystem/omniauth-lti.git", tag: 'avalon-r4'
   gem 'omniauth-shibboleth', git: "https://github.com/uvalib/omniauth-shibboleth.git", tag: 'v0.4.0'
-
+  
   gem 'mediainfo'
   gem 'delayed_job', '=4.0.4'
   gem 'delayed_job_active_record'
