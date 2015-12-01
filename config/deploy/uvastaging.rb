@@ -4,11 +4,10 @@ set :rails_env, ENV['RAILS_ENV'] || "development"
 
 set(:deployment_host) { "avalontest.lib.virginia.edu" }  # Host(s) to deploy to
 set(:deploy_to) { "/usr/local/projects/avalon" }  # Directory to deploy into
-set(:user) { 'dpg3k' }                # User to deploy as
+set(:user) { ENV['USER'] }                # User to deploy as
 set :branch, ENV['SCM_BRANCH'] || "capistrano_updates_for_uva"       # Git branch to deploy
 
 set :hls_dir, "/var/avalon/hls_streams"
-ssh_options[:keys] = ["/opt/staging/avalon/vov_deployment_key"]
 
 set :bundle_without, rails_env == "development" ? "production" : "development debug"
 
