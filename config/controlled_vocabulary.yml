@@ -41,6 +41,7 @@ name_types:
   edt: Editor
   hst: Host
   itr: Instrumentalist
+  ive: Interviewee
   mod: Moderator
   msd: Musical director
   mus: Musician
