@@ -49,7 +49,7 @@ module Avalon
         elsif line =~ /^#EXTINF:(.+),(.*)$/
           tags[:duration] = $1.to_f
           tags[:title] = $2
-        elsif line =~ /\.m3u8?$/i
+        elsif line =~ /\.m3u8?.*$/i
           url = @base.is_a?(URI) ? @base.merge(line).to_s : File.expand_path(line,@base.to_s)
           @playlist.merge!(Avalon::M3U8Reader.read(url).playlist)
         elsif line =~ /^[^#]/
