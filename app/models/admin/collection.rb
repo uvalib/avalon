@@ -213,6 +213,7 @@ class Admin::Collection < ActiveFedora::Base
         end
       end
       self.dropbox_directory_name = name
+      self.save!
     end
 
 end
