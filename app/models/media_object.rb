@@ -444,10 +444,8 @@ class MediaObject < ActiveFedora::Base
     solr_doc[Solrizer.default_field_mapper.solr_name("read_access_ip_group", indexer)] = collect_ips_for_index(ip_read_groups)
     solr_doc[Hydra.config.permissions.read.group] ||= []
     solr_doc[Hydra.config.permissions.read.group] += solr_doc[Solrizer.default_field_mapper.solr_name("read_access_ip_group", indexer)]
-    solr_doc["dc_creator_tesim"] = self.creator
     solr_doc["dc_publisher_tesim"] = self.publisher
     solr_doc["title_ssort"] = self.title
-    solr_doc["creator_ssort"] = Array(self.creator).join(', ')
     solr_doc["date_digitized_sim"] = parts.collect {|mf| mf.date_digitized }.compact.map {|t| Time.parse(t).strftime "%F" }
     solr_doc["date_ingested_sim"] = Time.parse(self.create_date).strftime "%F"
     #include identifiers for parts
