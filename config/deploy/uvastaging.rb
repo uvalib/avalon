@@ -67,7 +67,7 @@ namespace :deploy do
   end
 
   task :trust_rvmrc do
-    run "/home/dpg3k/.rvm/bin/rvm rvmrc trust #{latest_release}"
+    run "/home/md5wz/.rvm/bin/rvm rvmrc trust #{latest_release}"
   end
 
   task :start do
