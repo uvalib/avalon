@@ -213,6 +213,25 @@ class Admin::Collection < ActiveFedora::Base
     File.join(Avalon::Configuration.lookup('dropbox.mediated'), name)
   end
 
+  def blacklisted?
+    begin
+      blacklisted = false
+      File.open(Avalon::Configuration.lookup('indexing.config_file'), "r") do | file |
+        file.each_line do | line |
+          m = /collection-blacklist:(.*)/.match(line)
+          if !m.nil?
+            blacklisted = m[1].split(/,/).include? self.pid
+          end
+        end
+      end
+      return blacklisted
+    rescue => e
+      Rails.logger.error "Unable to determine if collection #{self.pid} is blacklisted! #{e.inspect}"
+      false
+    end
+  end
+
+
   private
 
       def create_dropbox_directory!
@@ -252,5 +271,4 @@ class Admin::Collection < ActiveFedora::Base
         self.dropbox_directory_name = name
         self.save!
       end
-
 end

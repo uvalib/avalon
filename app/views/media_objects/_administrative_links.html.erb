@@ -14,7 +14,17 @@ Unless required by applicable law or agreed to in writing, software distributed
 ---  END LICENSE_HEADER BLOCK  ---
 %>
 <% if can? :update, @mediaobject %>
-  <div class="row-fluid">
+    <div>
+      <%if @mediaobject.hidden? %>
+          <span class="label label-default">Item is marked as hidden</span>
+      <%elsif @mediaobject.collection.blacklisted? %>
+          <span class="label label-default">Collection does NOT publish to Virgo</span>
+      <% else %>
+          <span class="label label-success">Collection publishes to Virgo</span>
+      <% end %>
+    </div>
+
+    <div class="row-fluid">
       <p>
         <ul class="unstyled hidden">
           <li>
