@@ -145,8 +145,8 @@ class MasterFile < ActiveFedora::Base
   # limits of the system. For now this is hard coded but should probably eventually
   # be set up in a configuration file somewhere
   #
-  # 250 MB is the file limit for now
-  MAXIMUM_UPLOAD_SIZE = (2**20) * 250
+  # 8 GB is the file limit for now
+  MAXIMUM_UPLOAD_SIZE = (2**30) * 8
 
   WORKFLOWS = ['fullaudio', 'avalon', 'avalon-skip-transcoding', 'avalon-skip-transcoding-audio']
   AUDIO_TYPES = ["audio/vnd.wave", "audio/mpeg", "audio/mp3", "audio/mp4", "audio/wav", "audio/x-wav"]

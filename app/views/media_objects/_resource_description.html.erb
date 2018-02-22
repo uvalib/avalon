@@ -36,8 +36,22 @@ Unless required by applicable law or agreed to in writing, software distributed
                       options: {display_label: 'Publication date', required: true}} %>
 
   <%= render partial: 'text_field',
-             locals: {form: form, field: :creator,
-                      options: {display_label: 'Main contributor(s)', multivalued: true}} %>
+             locals: {form: form, field: :personal_name,
+                          options: {multivalued: true,
+                                    primary_hash_key: :name,
+                                    secondary_hash_key: :code,
+                                    display_label: 'Personal name(s)',
+                                    dropdown_field: :personal_name_code,
+                                    dropdown_options: ModsDocument::NAME_TYPES }} %>
+
+  <%= render partial: 'text_field',
+             locals: {form: form, field: :corporate_name,
+                          options: {multivalued: true,
+                                    primary_hash_key: :name,
+                                    secondary_hash_key: :code,
+                                    display_label: 'Corporate name(s)',
+                                    dropdown_field: :corporate_name_code,
+                                    dropdown_options: ModsDocument::NAME_TYPES }} %>
 
   <%= render partial: 'text_field',
              locals: {form: form, field: :date_created,
@@ -46,10 +60,6 @@ Unless required by applicable law or agreed to in writing, software distributed
   <%= render partial: 'text_area',
              locals: {form: form, field: :abstract,
                       options: {display_label: 'Summary'}} %>
-
-  <%= render partial: 'text_field',
-             locals: {form: form, field: :contributor,
-                      options: {multivalued: true}} %>
 
   <%= render partial: 'text_field',
              locals: {form: form, field: :publisher,
@@ -89,7 +99,7 @@ Unless required by applicable law or agreed to in writing, software distributed
                       options: {display_label: 'Time period(s)', multivalued: true}} %>
   <%= render partial: 'text_field',
              locals: {form: form, field: :geographic_subject,
-                      options: {display_label: 'Location(s)', multivalued: true}} %>
+                      options: {display_label: 'Geographic Subject(s)', multivalued: true}} %>
   <%= render partial: 'text_field',
              locals: {form: form, field: :permalink,
                       options: {}} %>

@@ -127,6 +127,14 @@ GIT
   specs:
     bootstrap-toggle-rails (2.2.1.0)
 
+GIT
+  remote: https://github.com/uvalib/omniauth-shibboleth.git
+  revision: a8ae025cfb21dbda35afc714d27a111cbdf07f6d
+  tag: v0.5.0
+  specs:
+    omniauth-shibboleth (0.5.0)
+      omniauth (~> 1.7.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -897,6 +905,7 @@ DEPENDENCIES
   net-ldap
   omniauth-identity
   omniauth-lti!
+  omniauth-shibboleth!
   parallel
   pg
   poltergeist
@@ -933,4 +942,4 @@ DEPENDENCIES
   zoom
 
 BUNDLED WITH
-   1.16.0
+   1.16.1

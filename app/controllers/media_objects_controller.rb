@@ -513,6 +513,14 @@ class MediaObjectsController < ApplicationController
     note = mo_parameters.delete(:note) || []
     note_type = mo_parameters.delete(:note_type) || []
     mo_parameters[:note] = note.zip(note_type).map{|a|{note: a[0],type: a[1]}}
+    #Personal Names
+    pnames = mo_parameters.delete(:personal_name) || []
+    pname_types = mo_parameters.delete(:personal_name_code) || []
+    mo_parameters[:personal_name] = pnames.zip(pname_types).map{|a|{name: a[0],code: a[1]}}
+    #Corporate Names
+    cnames = mo_parameters.delete(:corporate_name) || []
+    cname_types = mo_parameters.delete(:corporate_name_code) || []
+    mo_parameters[:corporate_name] = cnames.zip(cname_types).map{|a|{name: a[0],code: a[1]}}
 
     mo_parameters
   end

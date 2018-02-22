@@ -55,7 +55,7 @@ class Admin::Collection < ActiveFedora::Base
   end
 
   around_save :reindex_members, if: Proc.new{ |c| c.name_changed? or c.unit_changed? }
-  before_create :create_dropbox_directory!
+  after_create :create_dropbox_directory!
 
   def self.units
     Avalon::ControlledVocabulary.find_by_name(:units) || []
@@ -194,6 +194,10 @@ class Admin::Collection < ActiveFedora::Base
     File.join(Settings.dropbox.path, name || dropbox_directory_name)
   end
 
+  def mediated_absolute_path( name = nil )
+    File.join(Settings.dropbox.mediated, name)
+  end
+
   def media_objects_to_json
     media_objects.collect{|mo| [mo.id, mo.to_json] }.to_h
   end
@@ -261,10 +265,11 @@ class Admin::Collection < ActiveFedora::Base
       name = self.dropbox_directory_name
 
       if name.blank?
-        name = Avalon::Sanitizer.sanitize(self.name)
+        name = self.id
         iter = 2
         original_name = name.dup.freeze
-        while yield(name)
+
+        while File.exist? dropbox_absolute_path(name)
           name = "#{original_name}_#{iter}"
           iter += 1
         end
@@ -298,7 +303,19 @@ class Admin::Collection < ActiveFedora::Base
           Rails.logger.error "Could not create directory (#{absolute_path}): #{e.inspect}"
         end
       end
+
+      mediated_name = self.id + "_" + Avalon::Sanitizer.sanitize(self.name)
+      mediated_path = mediated_absolute_path(mediated_name)
+      unless File.directory?(mediated_path)
+          begin
+            Dir.mkdir(mediated_path)
+          rescue Exception => e
+            Rails.logger.error "Could not create mediated dropbox directory (#{mediated_path}): #{e.inspect}"
+          end
+      end
+
       self.dropbox_directory_name = name
+      self.save!
     end
 
     # Override represented_visibility if you want to add another visibility that is

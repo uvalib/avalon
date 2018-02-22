@@ -1,24 +1,23 @@
 development:
   administrator:
-    - archivist1@example.com
+    - md5wz@virginia.edu
   manager:
-    - archivist1@example.com
+    - srv3f@virginia.edu
   group_manager:
-    - archivist1@example.com
+    - srv3f@virginia.edu
 
 test:
   administrator:
-    - archivist1@example.com
+    - md5wz@virginia.edu
   manager:
-    - archivist1@example.com
+    - srv3f@virginia.edu
   group_manager:
-    - archivist1@example.com
+    - srv3f@virginia.edu
 
 production:
-  # Add roles for users here.
   administrator:
-    - <%= Settings.initial_user %>
+    - md5wz@virginia.edu
   manager:
-    - <%= Settings.initial_user %>
+    - srv3f@virginia.edu
   group_manager:
-    - <%= Settings.initial_user %>
+    - srv3f@virginia.edu

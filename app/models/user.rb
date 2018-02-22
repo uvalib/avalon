@@ -82,6 +82,14 @@ class User < ActiveRecord::Base
     self.find_or_create_by_username_or_email(auth_hash.uid, auth_hash.info.email)
   end
 
+  def self.find_for_shibboleth(auth_hash, signed_in_resource=nil)
+      logger.debug "In find_for_shibboleth: #{auth_hash}"
+      username = auth_hash['uid']
+      self.find_or_create_by_username_or_email(uid, uid)
+  end
+
+
+
   def self.autocomplete(query)
     self.where("username LIKE :q OR email LIKE :q", q: "%#{query}%").collect { |user|
       { id: user.user_key, display: user.user_key }

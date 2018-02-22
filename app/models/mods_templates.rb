@@ -93,11 +93,13 @@ module ModsTemplates
           end
         }
       end
-      def add_creator(name, attrs={})
-        add_child_node(ng_xml.root, :name, name, (attrs).merge(role_code: 'cre', role_text: 'Creator', primary: true))
+
+      def add_personal_name(rolecode, name)
+        add_child_node(ng_xml.root, :name, name, { role_code: rolecode, role_text: ModsDocument::NAME_TYPES[rolecode] })
       end
-      def add_contributor(name, attrs={})
-        add_child_node(ng_xml.root, :name, name, attrs)
+
+      def add_corporate_name(rolecode, name)
+        add_child_node(ng_xml.root, :name, name, { type: 'corporate', role_code: rolecode, role_text: ModsDocument::NAME_TYPES[rolecode] })
       end
 
       # Simple Subject Templates

@@ -71,7 +71,7 @@ class CatalogController < ApplicationController
     # :show may be set to false if you don't want the facet to be drawn in the
     # facet bar
     config.add_facet_field 'avalon_resource_type_ssim', label: 'Format', limit: 5, collapse: false
-    config.add_facet_field 'creator_ssim', label: 'Main contributor', limit: 5
+    config.add_facet_field 'creator_ssim', label: 'Creator', limit: 5
     config.add_facet_field 'date_sim', label: 'Date', limit: 5
     config.add_facet_field 'genre_sim', label: 'Genres', limit: 5
     config.add_facet_field 'collection_ssim', label: 'Collection', limit: 5
@@ -95,18 +95,16 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
     config.add_index_field 'date_ssi', label: 'Date', helper_method: :combined_display_date
-    config.add_index_field 'creator_ssim', label: 'Main contributors', helper_method: :contributor_index_display
     config.add_index_field 'summary_ssi', label: 'Summary', helper_method: :description_index_display
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
     config.add_show_field 'title_tesi', label: 'Title'
     config.add_show_field 'format_sim', label: 'Format'
-    config.add_show_field 'creator_sim', label: 'Creator'
     config.add_show_field 'language_sim', label: 'Language'
     config.add_show_field 'date_ssi', label: 'Date'
     config.add_show_field 'abstract_sim', label: 'Abstract'
-    config.add_show_field 'location_sim', label: 'Locations'
+    config.add_show_field 'location_sim', label: 'Geographic subjects'
     config.add_show_field 'time_period_sim', label: 'Time periods'
     config.add_show_field 'contributor_sim', label: 'Contributors'
     config.add_show_field 'publisher_sim', label: 'Publisher'
@@ -174,7 +172,6 @@ class CatalogController < ApplicationController
     # except in the relevancy case).
     config.add_sort_field 'score desc, title_ssort asc, date_ssi desc', label: 'Relevance'
     config.add_sort_field 'date_ssi desc, title_ssort asc', label: 'Date'
-    config.add_sort_field 'creator_ssort asc, title_ssort asc', label: 'Main contributor'
     config.add_sort_field 'title_ssort asc, date_ssi desc', label: 'Title'
 
     # If there are more than this many search results, no spelling ("did you

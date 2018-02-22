@@ -246,7 +246,7 @@ class MasterFilesController < ApplicationController
       opts = { :type => params[:type], :size => params[:size], :offset => params[:offset].to_f*1000, :preview => true }
       master_file.extract_still(opts)
     else
-      authorize! :read, master_file, message: "You do not have sufficient privileges to view this file"
+      authorize! :read, master_file, message: "You do not have sufficient privileges to view this file" unless master_file.media_object.published?
       whitelist = ["thumbnail", "poster"]
       if whitelist.include? params[:type]
         ds = master_file.send(params[:type].to_sym)

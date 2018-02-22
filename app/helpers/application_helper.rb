@@ -96,6 +96,14 @@ module ApplicationHelper
     }
   end
 
+  # Expects an array of hashes with a "name" and "code" values representing the name and their role code
+  def display_name_metadata(values)
+    return if values.nil? or values.empty?
+    result = '';
+    ModsDocument::NAME_TYPES.each {|n| result += String(display_metadata(n[1], values.reject{|v| v[:code] != n[0] }.map{|v| v[:name]}))}
+    result.html_safe
+  end
+
   def search_result_label item
     if item['title_tesi'].present?
       label = truncate(item['title_tesi'], length: 100)

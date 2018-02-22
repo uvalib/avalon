@@ -36,12 +36,9 @@ module ModsBehaviors
     solr_doc['heading_sim'] = self.find_by_terms(:main_title).text
 
 
-    solr_doc['creator_ssim'] = gather_terms(self.find_by_terms(:creator))
-#    solr_doc['creator_ssi'] = self.find_by_terms(:creator).text
     # Individual fields
     solr_doc['summary_ssi'] = self.find_by_terms(:abstract).text
     solr_doc['publisher_sim'] = gather_terms(self.find_by_terms(:publisher))
-    solr_doc['contributor_sim'] = gather_terms(self.find_by_terms(:contributor))
     solr_doc['subject_sim'] = gather_terms(self.find_by_terms(:subject))
     solr_doc['genre_sim'] = gather_terms(self.find_by_terms(:genre))
 #    solr_doc['physical_dtl_sim'] = gather_terms(self.find_by_terms(:format))
@@ -76,6 +73,8 @@ module ModsBehaviors
     solr_doc['related_item_label_sim'] = gather_terms(self.find_by_terms(:related_item_label))
     solr_doc['terms_of_use_si'] = self.find_by_terms(:terms_of_use).text
     solr_doc['other_identifier_sim'] = gather_terms(self.find_by_terms(:other_identifier))
+    solr_doc['personal_names_sim'] = gather_terms(self.find_by_terms(:personal_name))
+    solr_doc['corporate_names_sim'] = gather_terms(self.find_by_terms(:corporate_name))
 
     # Extract 4-digit year for creation date facet in Hydra and pub_date facet in Blacklight
     solr_doc['date_ssi'] = self.find_by_terms(:date_issued).text

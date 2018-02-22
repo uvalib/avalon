@@ -211,16 +211,6 @@ module MediaObjectMods
   end
 
   # Additional descriptive metadata
-  # has_attributes :contributor, datastream: :descMetadata, at: [:contributor], multiple: true
-  def contributor
-    descMetadata.contributor
-  end
-
-  def contributor=(value)
-    delete_all_values(:contributor)
-    Array(value).each { |val| descMetadata.add_contributor(val) if val.present? }
-  end
-
   # has_attributes :publisher, datastream: :descMetadata, at: [:publisher], multiple: true
   def publisher
     descMetadata.publisher
@@ -364,6 +354,25 @@ module MediaObjectMods
     delete_all_values(:record_identifier)
     Array(value).each { |val| descMetadata.add_record_identifier(val) if val.present? }
   end
+
+  # has_attributes :personal_name, datastream: :descMetadata, at: [:personal_name], multiple: true
+  def personal_name
+    descMetadata.personal_name.present? ? descMetadata.personal_name.name_part.zip(descMetadata.personal_name.role.code).map{|a|{name: a[0], code: a[1] }} : nil
+  end
+  def personal_name=(value_hashes)
+    delete_all_values(:personal_name)
+    Array(value_hashes).each { |val| descMetadata.add_personal_name(val[:code], val[:name]) if val[:code].present? and val[:name].present? }
+  end
+
+  # has_attributes :corporate_name, datastream: :descMetadata, at: [:corporate_name], multiple: true
+  def corporate_name
+    descMetadata.corporate_name.present? ? descMetadata.corporate_name.name_part.zip(descMetadata.corporate_name.role.code).map{|a|{name: a[0], code: a[1] }}  : nil
+  end
+  def corporate_name=(value_hashes)
+    delete_all_values(:corporate_name)
+    Array(value_hashes).each { |val| descMetadata.add_corporate_name(val[:code], val[:name]) if val[:code].present? and val[:name].present? }
+  end
+
 
   # def find_metadata_attribute(attribute)
   #   metadata_attribute = klass_attribute_to_metadata_attribute_map[ attribute.to_sym ]

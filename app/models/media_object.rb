@@ -40,9 +40,9 @@ class MediaObject < ActiveFedora::Base
   # that preferred controlled vocabulary standards are used
 
   # Guarantees that the record is minimally complete - ie that within the descriptive
-  # metadata the title, creator, date of creation, and identifier fields are not
-  # blank. Since identifier is set automatically we only need to worry about creator,
-  # title, and date of creation.
+  # metadata the title, date of creation, and identifier fields are not blank.
+  # Since identifier is set automatically we only need to worry about title, and
+  # date of creation.
 
   validates :collection, presence: true
   # validates :governing_policies, presence: true if Proc.new { |mo| mo.changes["governing_policy_ids"].empty? }
@@ -213,7 +213,6 @@ class MediaObject < ActiveFedora::Base
       solr_doc[Hydra.config.permissions.read.group] ||= []
       solr_doc[Hydra.config.permissions.read.group] += solr_doc['read_access_ip_group_ssim']
       solr_doc["title_ssort"] = self.title
-      solr_doc["creator_ssort"] = Array(self.creator).join(', ')
       solr_doc["date_digitized_sim"] = master_files.collect {|mf| mf.date_digitized }.compact.map {|t| Time.parse(t).strftime "%F" }
       solr_doc["date_ingested_sim"] = self.create_date.strftime "%F"
       #include identifiers for parts
@@ -228,8 +227,6 @@ class MediaObject < ActiveFedora::Base
       #Add all searchable fields to the all_text_timv field
       all_text_values = []
       all_text_values << solr_doc["title_tesi"]
-      all_text_values << solr_doc["creator_ssim"]
-      all_text_values << solr_doc["contributor_sim"]
       all_text_values << solr_doc["unit_ssim"]
       all_text_values << solr_doc["collection_ssim"]
       all_text_values << solr_doc["summary_ssi"]
@@ -254,7 +251,6 @@ class MediaObject < ActiveFedora::Base
       id: id,
       title: title,
       collection: collection.name,
-      main_contributors: creator,
       publication_date: date_created,
       published_by: avalon_publisher,
       published: published?,

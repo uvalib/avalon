@@ -32,7 +32,9 @@ class LanguageTerm
 
     def autocomplete(query)
       map = query.present? ? self.map.select{ |k,v| /#{query}/i.match(v[:text]) if v } : self.map
-      map.to_a.uniq.map{ |e| {id: e[1][:code], display: e[1][:text] }}.sort{ |x,y| x[:display]<=>y[:display] }
+      result = map.to_a.uniq.map{ |e| {id: e[1][:code], display: e[1][:text].force_encoding("utf-8") }}.sort{ |x,y| x[:display]<=>y[:display] }
+      Rails.logger.info(result)
+      result
     end
 
     def load!

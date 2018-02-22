@@ -48,6 +48,7 @@ gem 'ims-lti', '~> 1.1.13'
 gem 'net-ldap'
 gem 'omniauth-identity'
 gem 'omniauth-lti', git: "https://github.com/avalonmediasystem/omniauth-lti.git", tag: 'avalon-r4'
+gem 'omniauth-shibboleth', git: "https://github.com/uvalib/omniauth-shibboleth.git", tag: 'v0.5.0'
 
 # Media Access & Transcoding
 gem 'active_encode', '~> 0.1.1'
@@ -56,6 +57,7 @@ gem 'mediainfo', git: "https://github.com/avalonmediasystem/mediainfo.git", bran
 gem 'rest-client'
 gem 'roo'
 gem 'rubyhorn', git: "https://github.com/avalonmediasystem/rubyhorn.git", tag: 'avalon-r6'
+gem 'avalon-wowza'
 
 # Data Translation & Normalization
 gem 'edtf'
