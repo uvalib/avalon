@@ -27,6 +27,7 @@ module FedoraMigrate
           ActiveFedora::SolrService.instance.conn.commit if (i % 100 == 0)
           ActiveFedora::SolrService.instance.conn.optimize if (i % 1000 == 0)
           remove_object(pid, klass) unless overwrite?
+          puts "migrating #{pid}"
           migrate_object(source_object(pid), klass)
         end
         ::MediaObject.set_callback(:save, :before, :update_dependent_properties!) if klass == ::MediaObject
@@ -135,7 +136,12 @@ module FedoraMigrate
           ensure
             status_record.update_attribute :status, end_status(result, method, klass)
             remove_object(source.pid, klass) if status_record.status == "failed"
-            @report.save(source.pid, result)
+            #begin
+            #  puts "Saving report #{@report}"
+            #  @report.save(source.pid, result)
+            #rescue SystemStackError => e
+            #  puts "Unable to save report #{@report}"
+            #end
           end
         end
       end
