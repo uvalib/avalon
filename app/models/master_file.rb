@@ -170,7 +170,7 @@ class MasterFile < ActiveFedora::Base
     when URI, Addressable::URI
       case file.scheme
       when 'file'
-        saveOriginal(File.open(file.path), File.basename(file.path))
+        saveOriginal(File.open(file.path))
       when 's3'
         self.file_location = file.to_s
         self.file_size = FileLocator::S3File.new(file).object.size
