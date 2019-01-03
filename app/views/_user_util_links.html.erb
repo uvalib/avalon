@@ -43,6 +43,7 @@ Unless required by applicable law or agreed to in writing, software distributed
     <%= link_to_if user_signed_in?, 'Sign out', destroy_user_session_path do %>
     <%# Fallback if the test above fails %>
     <%= link_to 'Sign in', new_user_session_path %>
+    <%= link_to "Sign in with Google", user_omniauth_authorize_path(:google_oauth2) %>
     <% end %>
   </ul>
 </div>

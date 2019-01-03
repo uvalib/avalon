@@ -88,6 +88,12 @@ class User < ActiveRecord::Base
       self.find_or_create_by_username_or_email(username, username)      
   end
 
+  def self.find_for_google_oauth2(auth_hash, signed_in_resource=nil)
+    logger.debug "In find_for_google_oauth2 #{auth_hash}"
+    username = auth_hash['info']["email"]
+    self.find_or_create_by_username_or_email(username, username)
+  end
+
   def self.autocomplete(query)
     self.where("username LIKE :q OR email LIKE :q", q: "%#{query}%").collect { |user|
       { id: user.user_key, display: user.user_key }

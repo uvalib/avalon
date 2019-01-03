@@ -18,4 +18,5 @@ Unless required by applicable law or agreed to in writing, software distributed
       <%= user_key %> <%= link_to t('auth.sign_out'), destroy_user_session_path %>
     <% else %>
       <%= link_to t('auth.sign_in'), new_user_session_path %>
+      <%= link_to t('auth.sign_in_google'), user_omniauth_authorize_path(:google_oauth2) %>
     <% end %>
