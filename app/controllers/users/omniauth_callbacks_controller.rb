@@ -66,7 +66,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       if auth_type == 'google_oauth2'
         user_session[:virtual_groups] = [ 'google' ]
         if (request.env['omniauth.auth']['info']['email'].end_with? 'vccs.edu')
-          user_session[:virtual_groups] << [ 'member@vccs.edu' ]
+          user_session[:virtual_groups] << 'member@vccs.edu'
+        end
+        if (request.env['omniauth.auth']['info']['email'].end_with? 'gmail.com')
+          user_session[:virtual_groups] << 'member@gmail.com'
         end
       end
       logger.info "Virtual groups: #{user_session[:virtual_groups]}"
