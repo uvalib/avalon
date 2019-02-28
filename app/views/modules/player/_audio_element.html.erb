@@ -12,5 +12,8 @@
         <% section_info[:stream_hls].each do |hls| %>
           <source src="<%= hls[:url] %>" data-quality="<%= hls[:quality] %>" data-plugin-type="native" type="application/x-mpegURL"/>
         <% end %>
+        <% if section_info[:captions_path].present? %>
+          <track srclang="en" kind="subtitles" type="<%= section_info[:captions_format] %>" src="<%= section_info[:captions_path] %>"></track>
+        <% end %>
         </audio>
       <% end %>
