@@ -117,6 +117,14 @@ GIT
       aws-sdk-sqs (~> 1)
       rails (>= 4.2)
 
+GIT
+  remote: https://github.com/uvalib/omniauth-shibboleth.git
+  revision: f7fff436aa2e3561487dfd4dd6c1ac9ffc7eb985
+  tag: v0.7.0
+  specs:
+    omniauth-shibboleth (0.7.0)
+      omniauth (~> 1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -1890,6 +1898,7 @@ DEPENDENCIES
   okcomputer
   omniauth-identity
   omniauth-lti!
+  omniauth-shibboleth!
   parallel
   pg
   pry-byebug
