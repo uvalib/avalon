@@ -330,12 +330,53 @@ EOC
     end
   end
 
+  def fedora_overrides
+    ActiveFedora::Indexing::DescendantFetcher.class_eval do
+
+      def descendant_and_self_uris_partitioned_by_model
+        # GET could be slow if it's a big resource, we're using HEAD to avoid this problem,
+        # but this causes more requests to Fedora.
+        # added `try` to avoid error with Ldp::NoneClass
+        return partitioned_uris unless rdf_resource.head.try :rdf_source?
+
+        add_self_to_partitioned_uris unless @exclude_self
+
+        immediate_descendant_uris = rdf_graph.query(predicate: ::RDF::Vocab::LDP.contains).map { |descendant| descendant.object.to_s }
+        immediate_descendant_uris.each do |descendant_uri|
+          self.class.new(
+            descendant_uri,
+            priority_models: priority_models
+          ).descendant_and_self_uris_partitioned_by_model.tap do |descendant_partitioned|
+            descendant_partitioned.keys.each do |k|
+              partitioned_uris[k] ||= []
+              partitioned_uris[k].concat descendant_partitioned[k]
+            end
+          end
+        end
+        partitioned_uris
+      end
+    end
+
+  end
+
   desc 'Reindex all Avalon objects'
   # @example RAILS_ENV=production bundle exec rake avalon:reindex would do a single threaded production environment reindex
   # @example RAILS_ENV=production bundle exec rake avalon:reindex[2] would do a dual threaded production environment reindex
   task :reindex, [:threads] => :environment do |t, args|
-    descendants = ActiveFedora::Base.descendant_uris(ActiveFedora.fedora.base_uri)
-    descendants.shift # remove the root
+    descendants = nil
+    # save/load to file for faster access when this fails
+    dump_file = '/tmp/descendants.dump'
+    if File.exists?(dump_file)
+      File.open(dump_file, 'rb') {|f| descendants = Marshal::load(f)}
+      puts "loaded descendants dump file"
+    else
+      fedora_overrides
+      descendants = ActiveFedora::Indexing::DescendantFetcher.new(ActiveFedora.fedora.base_uri, exclude_self: true).descendant_and_self_uris
+
+      File.open(dump_file, 'wb') { |f| f.write(Marshal.dump(descendants)) }
+      puts "saved descendants dump file"
+    end
+
     Parallel.map(descendants, in_threads: args[:threads].to_i || 1) do |uri|
       begin
         ActiveFedora::Base.find(ActiveFedora::Base.uri_to_id(uri)).update_index
