@@ -72,7 +72,13 @@ encode_throttling:
   update_jobs_throttle_threshold: 3
   update_jobs_spacing: 10
 auth:
-  registerable: true
+  registerable: false
+  configuration:
+    - name: 'Shibboleth'
+      provider: :shibboleth
+      params:
+        callback_path: '/users/auth/shibboleth/callback'
+        request_path: '/users/auth/shibboleth'
 #   configuration:
 #     - :name: Avalon Lti OAuth
 #       :provider: :lti
