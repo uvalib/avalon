@@ -8,6 +8,7 @@ RUN         echo "deb http://deb.debian.org/debian stretch-backports main" >> /e
             zip \
             git \
             libyaz-dev \
+            vim \
          && rm -rf /var/lib/apt/lists/* \
          && apt-get clean
 
@@ -20,7 +21,7 @@ RUN         gem install bundler -v "$(grep -A 1 "BUNDLED WITH" Gemfile.lock | ta
 
 # Build development gems
 FROM        bundle as bundle-dev
-RUN         bundle install --with aws development test postgres --without production 
+RUN         bundle install --with aws development test postgres --without production
 
 
 # Download binaries in parallel
