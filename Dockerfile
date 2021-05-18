@@ -8,7 +8,6 @@ RUN         echo "deb http://deb.debian.org/debian stretch-backports main" >> /e
             zip \
             git \
             libyaz-dev \
-            vim \
          && rm -rf /var/lib/apt/lists/* \
          && apt-get clean
 
@@ -58,6 +57,7 @@ RUN         apt-get update && apt-get install -y --no-install-recommends --allow
             zip \
             dumb-init \
             libyaz-dev \
+            vim \
          && ln -s /usr/bin/lsof /usr/sbin/
 
 
