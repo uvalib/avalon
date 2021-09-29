@@ -13,6 +13,9 @@ phases:
     runtime-versions:
       golang: 1.15
     commands:
+     # update
+      - apt-get update -y
+      - apt-get install -y ansible
       - wget https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip
       - unzip terraform_${terraform_version}_linux_amd64.zip
       - mv terraform /usr/local/bin
@@ -26,9 +29,6 @@ phases:
     commands:
       - cd $CODEBUILD_SRC_DIR/terraform-infrastructure/avalon.lib.virginia.edu/staging
       - terraform init -no-color
-      #
-      # get the current instance AMI
-      #
       - AMI=$(terraform output instance_ami | tr -d "\"")
       - echo "AMI: $AMI"
       - |
@@ -36,13 +36,9 @@ phases:
            echo "ERROR: cannot determine instance AMI"
            exit 1
         fi
-      #
-      # create the ansible inventory and variables file
-      #
       - terraform apply -auto-approve -no-color -var instance_ami="$AMI" --target=local_file.inventory --target=local_file.tfvars
       - cd ansible
-      # run undeploy playbook
-      # run deploy playbook
+      - ansible-playbook undeploy-backend.yml
 
 
 #  post_build:
