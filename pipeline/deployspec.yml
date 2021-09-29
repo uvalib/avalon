@@ -28,16 +28,17 @@ phases:
     commands:
       - cd $CODEBUILD_SRC_DIR/terraform-infrastructure/avalon.lib.virginia.edu/staging
       - terraform init -no-color
-      - AMI=$(terraform output instance_ami | tr -d "\"")
-      - echo "AMI: $AMI"
-      #- |
-      #  if [ -z "$AMI" ]; then
-      #     echo "ERROR: cannot determine instance AMI"
-      #     exit 1
-      #  fi
-      #- terraform apply -auto-approve -no-color -var instance_ami="$AMI" --target=local_file.inventory --target=local_file.tfvars
-      #- cd ansible
-      #- ansible-playbook undeploy-backend.yml
+      - ami=$(terraform output instance_ami | tr -d "\"")
+
+#- echo "AMI: $ami"
+#- |
+#  if [ -z "$AMI" ]; then
+#     echo "ERROR: cannot determine instance AMI"
+#     exit 1
+#  fi
+#- terraform apply -auto-approve -no-color -var instance_ami="$AMI" --target=local_file.inventory --target=local_file.tfvars
+#- cd ansible
+#- ansible-playbook undeploy-backend.yml
 
 #  post_build:
 #    commands:
