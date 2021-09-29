@@ -1,0 +1,53 @@
+#
+# deployspec.yml
+#
+
+version: 0.2
+
+env:
+  variables:
+    terraform_version: 1.0.7
+
+phases:
+  install:
+    runtime-versions:
+      golang: 1.15
+    commands:
+      - wget https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip
+      - unzip terraform_${terraform_version}_linux_amd64.zip
+      - mv terraform /usr/local/bin
+
+  pre_build:
+    commands:
+      - latest_build=$(aws --region=$AWS_REGION ssm get-parameter --name /containers/$CONTAINER_IMAGE/latest | grep "Value" | awk -F\" '{print $4}')
+      - git clone https://$GITLAB_USER:$GITLAB_TOKEN@gitlab.com/uvalib/terraform-infrastructure.git
+
+  build:
+    commands:
+      - cd $CODEBUILD_SRC_DIR/terraform-infrastructure/avalon.lib.virginia.edu/staging
+      - terraform init -no-color
+      #
+      # get the current instance AMI
+      #
+      - AMI=$(terraform output instance_ami | tr -d "\"")
+      - echo "AMI: $AMI"
+      - |
+        if [ -z "$AMI" ]; then
+           echo "ERROR: cannot determine instance AMI"
+           exit 1
+        fi
+      #
+      # create the ansible inventory and variables file
+      #
+      - terraform apply -auto-approve -no-color -var instance_ami="$AMI" --target=local_file.inventory --target=local_file.tfvars
+      - cd ansible
+      # run undeploy playbook
+      # run deploy playbook
+
+
+#  post_build:
+#    commands:
+
+#
+# end of file
+#
