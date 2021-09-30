@@ -52,7 +52,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     find_method = "find_for_#{auth_type}".to_sym
     find_method = :find_for_generic unless User.respond_to?(find_method)
     logger.debug "#{auth_type} :: #{current_user.inspect}"
-    logger.debug "Omniauth: #{request.env["omniauth.auth"]}"
+    logger.info "Omniauth: #{request.env["omniauth.auth"]}"
     @user = User.send(find_method,request.env["omniauth.auth"], current_user)
     if @user.persisted?
       flash[:success] = I18n.t "devise.omniauth_callbacks.success", :kind => auth_type
