@@ -1,23 +1,26 @@
 namespace :uva do
   namespace :migrate do
+
+    require 'fileutils'
+
     desc "Migrate streaming assets from Wowza to Nginx formats"
     task :all_derivatives => :environment do
 
       derivative_count = Derivative.count
 
       puts "Checking and migrating #{derivative_count} Derivatives"
-      require 'ruby-progressbar'
-      progressbar = ProgressBar.create(total: derivative_count)
 
       Derivative.find_each({},{batch_size:5}) do |der|
         migrate_stream(der)
-        progressbar.increment
       end
+      puts "Finished!"
     end
 
+    desc "Migrate one Derivative rake uva:migrate:one_derivative ID=xxxxxxx"
     task :one_derivative => :environment do
       if ENV['ID'].blank?
-        raise "Include a Derivative Id with this format: rake uva:migrate:one_derivative ID=xxxxxxx "
+        puts "Include a Derivative Id with this format: rake uva:migrate:one_derivative ID=xxxxxxx "
+        return
       end
       der = Derivative.find(ENV['ID'])
       migrate_stream(der)
@@ -44,12 +47,15 @@ namespace :uva do
       file_extension = old_file_name.split('.')[1]
       quality_level = der.quality
 
-      new_file = "file://#{NEW_STREAM_DIR}/#{derivative_hash}/outputs/#{file_name}-#{quality_level}.#{file_extension}"
+      new_dir = "#{NEW_STREAM_DIR}/#{derivative_hash}/outputs/"
+      new_name = "#{file_name}-#{quality_level}.#{file_extension}"
+      new_path =  new_dir + new_name
 
       # copy to the new file structure
-      success = system('cp', old_file, new_file)
-      if success && File.exists?(new_file)
-        der.absolute_location = new_file
+      FileUtils.mkdir_p(new_dir)
+      success = system('cp', old_file, new_path)
+      if success && File.exists?(new_path)
+        der.absolute_location = "file://" + new_path
         der.set_streaming_locations!
         der.save
         puts "Updated #{der.id}"
